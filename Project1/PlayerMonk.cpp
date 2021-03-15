@@ -21,12 +21,12 @@ bool PlayerMonk::getCurrentlyHealing()
 	return bCurrentlyHealing;
 }
 
-void PlayerMonk::setCurrentlyHealing(bool isTrue, int amount)
+void PlayerMonk::setCurrentlyHealing(bool isTrue)
 {
 	bCurrentlyHealing = isTrue;
 	if (bCurrentlyHealing)
 	{
-		setCurrentHealth(amount);
+		setCurrentHealth(MAX_HEALTH);
 	}
 }
 
@@ -164,7 +164,7 @@ void PlayerMonk::UseHealthPotion()
 	if (bHasHealthPotion)
 	{
 		std::cout << "Player uses Healing Potion :" << "\n";
-		setCurrentlyHealing(true, 100);
+		setCurrentlyHealing(true);
 		RemoveItemFromInventory("Health Potion");
 	}
 }
@@ -207,7 +207,7 @@ void PlayerMonk::EquipStaff()
 	if (bHasStaff && CheckInventoryForItem("Staff"))
 	{
 		std::cout << "Player Equips A Staff" << "\n";
-		damage = 5;
+		damage = 3;
 	}
 }
 
@@ -241,18 +241,6 @@ void PlayerMonk::setIsDefending(bool isTrue)
 {
 	isDefending = isTrue;
 	setIsAttacking(false);
-}
-
-void PlayerMonk::Defend()
-{
-	if (isDefending && isAttacking == false)
-	{
-		setCurrentHealth(currentHealth++);
-	}
-}
-
-void PlayerMonk::Attack()
-{
 }
 
 
