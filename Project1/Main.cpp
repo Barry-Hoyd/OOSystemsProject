@@ -4,10 +4,21 @@
 #include <iostream>
 #include <string>
 #include "PlayerMonk.h"
+#include "Enemy.h"
 
 int main()
 {
     PlayerMonk playerMonk;
+    Goblin goblin;
+    Oger oger;
+    Cyclops cyclops;
+
+    std::cout << "Goblins current health: " << goblin.getCurrentHealth() << "\n";
+    std::cout << "oger current health: " << oger.getCurrentHealth() << "\n";
+    std::cout << "cyclops current health: " << cyclops .getCurrentHealth() << "\n";
+    std::cout << "\n";
+
+    goblin.getCombatMove();
 
     playerMonk.AddItemToInventory("Health Potion");
     playerMonk.AddItemToInventory("Armour");
@@ -49,5 +60,6 @@ int main()
     playerMonk.EquipStaff();
     std::cout << "Players Current Damage: " << playerMonk.getDamage() << "\n";
     std::cout << "\n";
+
 }
 

@@ -5,13 +5,13 @@ class PlayerMonk
 {
 private: 
 	/*Health & Armour*/
-	int currentHealth = 100;
-	const int MAX_HEALTH = 100;
+	int currentHealth = 15;
+	const int MAX_HEALTH = 15;
 	bool bCurrentlyHealing = false;
 	bool bIsDead = false;
 	/*Player Combat Stats*/
 	int armour = 0;
-	int damage = 1;
+	int damage = 3;
 	bool isAttacking = false;
 	bool isDefending = false;
 	/*Players Inventory*/
@@ -24,7 +24,6 @@ private:
 	bool bHasArmour = false;
 	bool bHasStaff = false;
 	
-
 public:
 
 	/*Player Health Getters & Setters*/
@@ -36,7 +35,7 @@ public:
 	
 	bool getCurrentlyHealing();
 
-	void setCurrentlyHealing(bool isTrue);
+	void setCurrentlyHealing(bool isTrue, int amount);
 
 	bool getDead();
 
@@ -81,5 +80,9 @@ public:
 	bool getIsDefending();
 
 	void setIsDefending(bool isTrue);
+
+	void Defend();
+
+	void Attack();
 };
 
