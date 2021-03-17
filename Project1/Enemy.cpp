@@ -44,6 +44,6 @@ void Enemy::Attack(int attackHitChance)
 	if (bisAttacking && bisDefending == false)
 	{
 		srand((unsigned)time(0)); //Used to randomise the attack pattern each time
-		int attackChance = rand() % attackChance;
+		//int attackChance = rand() % attackChance;
 	}
 }

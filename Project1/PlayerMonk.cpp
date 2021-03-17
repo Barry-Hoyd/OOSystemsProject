@@ -1,4 +1,8 @@
 #include "PlayerMonk.h"
+#include "RoomGenerator.h"
+#include "UserInput.h"
+
+UserInput userInput;
 
 /*Sets Player Health*/
 int PlayerMonk::getCurrentHealth()
@@ -13,7 +17,7 @@ void PlayerMonk::setCurrentHealth(int amount)
 
 const int PlayerMonk::getMaxHealth()
 {
-	return 0;
+	return MAX_HEALTH;
 }
 
 bool PlayerMonk::getCurrentlyHealing()
@@ -211,6 +215,16 @@ void PlayerMonk::EquipStaff()
 	}
 }
 
+bool PlayerMonk::getKey()
+{
+	return bHasKey;
+}
+
+void PlayerMonk::setHasKey(bool isTrue)
+{
+	bHasKey = isTrue;
+}
+
 int PlayerMonk::getArmour()
 {
 	return armour;
@@ -254,6 +268,8 @@ void PlayerMonk::Defend()
 void PlayerMonk::Attack()
 {
 }
+
+
 
 
 

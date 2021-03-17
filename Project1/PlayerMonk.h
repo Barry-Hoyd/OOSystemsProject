@@ -9,6 +9,9 @@ private:
 	const int MAX_HEALTH = 15;
 	bool bCurrentlyHealing = false;
 	bool bIsDead = false;
+	/*Player Movement*/
+	int playerMap[3][3];
+	int playerCurrentRoomNumber = 7;
 	/*Player Combat Stats*/
 	int armour = 0;
 	int damage = 3;
@@ -23,6 +26,8 @@ private:
 	bool bHasBomb = false;
 	bool bHasArmour = false;
 	bool bHasStaff = false;
+	bool bHasKey = false;
+	
 	
 public:
 
@@ -66,6 +71,10 @@ public:
 	void setHasStaff(bool isTrue);
 
 	void EquipStaff();
+
+	bool getKey();
+
+	void setHasKey(bool isTrue);
 
 	/*Combat stats*/
 

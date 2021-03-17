@@ -4,16 +4,41 @@
 #include <iostream>
 #include <string>
 #include "PlayerMonk.h"
+#include "PlayerMovement.h"
 #include "Enemy.h"
+#include "UserInput.h"
 
 int main()
 {
     PlayerMonk playerMonk;
+    PlayerMovement playerMovement;
     Goblin goblin;
     Oger oger;
     Cyclops cyclops;
 
-    std::cout << "Goblins current health: " << goblin.getCurrentHealth() << "\n";
+    UserInput userInput;
+
+    bool bGameOver = false;
+
+    playerMovement.InitaliseMap();
+    playerMovement.SpawnPlayer();
+    while (!bGameOver)
+    {
+        playerMovement.MovePlayer();
+        playerMovement.DisplayMap();
+
+    }
+
+
+
+
+   /* userInput.getMovementDirection();
+    userInput.getPlayerAction();
+    userInput.getYesNo();
+    */
+    
+
+    /*std::cout << "Goblins current health: " << goblin.getCurrentHealth() << "\n";
     std::cout << "oger current health: " << oger.getCurrentHealth() << "\n";
     std::cout << "cyclops current health: " << cyclops .getCurrentHealth() << "\n";
     std::cout << "\n";
@@ -60,6 +85,6 @@ int main()
     playerMonk.EquipStaff();
     std::cout << "Players Current Damage: " << playerMonk.getDamage() << "\n";
     std::cout << "\n";
-
+    */
 }
 
