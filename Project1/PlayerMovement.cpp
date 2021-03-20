@@ -1,6 +1,13 @@
 #include "PlayerMovement.h"
 #include <iostream>
 
+//RoomGenerator room5(1, 1, Monster, Cyclops, true, false, false, false, false, false, "Pee Pee Poo Poo.");
+
+PlayerMovement::PlayerMovement()
+{
+	
+}
+
 int PlayerMovement::getPlayerLoaction()
 {
     return playerLoaction;
@@ -37,8 +44,9 @@ void PlayerMovement::DisplayMap()
 void PlayerMovement::SpawnPlayer()
 {
 	Map[2][1] = 1;
-	roomGenerator.GenerateNewRoomLocation(2, 1);
+	
 	std::cout << "You awaken in a darken room. You have no idea how you got here. "<< "\n" << "You know that adventuring through the rooms will be the best chance of escape." << "\n";
+	//room7.DisplayCurrentRoom(2,1);
 }
 
 void PlayerMovement::MovePlayer()
@@ -98,7 +106,12 @@ void PlayerMovement::MoveNorth(int x, int y)
 		{
 			Map[x - 1][y] = 1;
 			Map[x][y] = 0;
-			roomGenerator.GenerateNewRoomLocation(x-1, y);
+			//roomGenerator.DisplayCurrentRoom(x-1, y);
+			if (x - 1 == 1 && y == 1)
+			{
+				//room5.getDescription();
+				std::cout << "\n";
+			}
 		}
 	}
 	else
@@ -113,7 +126,7 @@ void PlayerMovement::MoveSouth(int x, int y)
 	{
 		Map[x + 1][y] = 1;
 		Map[x][y] = 0;
-		roomGenerator.GenerateNewRoomLocation(x + 1, y);
+		//roomGenerator.DisplayCurrentRoom(x + 1, y);
 	}
 	else
 	{
@@ -131,7 +144,7 @@ void PlayerMovement::MoveEast(int x, int y)
 	{
 		Map[x][y + 1] = 1;
 		Map[x][y] = 0;
-		roomGenerator.GenerateNewRoomLocation(x, y+1);
+		//roomGenerator.DisplayCurrentRoom(x, y+1);
 	}
 }
 
@@ -145,7 +158,7 @@ void PlayerMovement::MoveWest(int x, int y)
 	{
 		Map[x][y - 1] = 1;
 		Map[x][y] = 0;
-		roomGenerator.GenerateNewRoomLocation(x, y - 1);
+		//roomGenerator.DisplayCurrentRoom(x, y - 1);
 	}
 }
 

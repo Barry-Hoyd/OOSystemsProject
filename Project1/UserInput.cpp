@@ -8,7 +8,7 @@ string UserInput::getMovementDirection()
 	do 
 	{
 		cin >> movementDirection;
-		if (movementDirection == "North" || movementDirection == "South" || movementDirection == "East" || movementDirection == "West")
+		if (movementDirection == "North" || movementDirection == "South")
 		{
 			bValidInput = true;
 			if (movementDirection == "North")
@@ -19,14 +19,6 @@ string UserInput::getMovementDirection()
 			{
 				return "South";
 			}
-			else if (movementDirection == "East")
-			{
-				return "East";
-			}
-			else if (movementDirection == "West")
-			{
-				return "West";
-			}
 		}
 		else
 		{
@@ -36,16 +28,30 @@ string UserInput::getMovementDirection()
 	
 }
 
-void UserInput::getPlayerAction()
+int UserInput::getPlayerAction()
 {
 	bool bValidInput = false;
-	std::cout << "Please enter the action you wish to preform: ";
 	do 
 	{
 		cin >> playerAction;
-		if (playerAction == 1 || playerAction == 2 || playerAction == 3)
+		if (playerAction == 1 || playerAction == 2 || playerAction == 3 || playerAction ==4)
 		{
-			bValidInput = true;
+			if (playerAction == 1)
+			{
+				return 1;
+			}
+			else if (playerAction == 2)
+			{
+				return 2;
+			}
+			else if (playerAction == 3)
+			{
+				return 3;
+			}
+			else if (playerAction == 4)
+			{
+				return 4;
+			}
 		}
 		else
 		{
@@ -54,16 +60,24 @@ void UserInput::getPlayerAction()
 	} while (!bValidInput);
 }
 
-void UserInput::getYesNo()
+char UserInput::getYesNo()
 {
 	bool bValidInput = false;
-	std::cout << "Y or N: ";
+	std::cout << "Would you like to pick it up? Y or N?: ";
 	do
 	{
 		cin >> yesNo;
 		if (yesNo == 'Y' || yesNo == 'N')
 		{
 			bValidInput = true;
+			if (yesNo == 'Y')
+			{
+				return true;
+			}
+			else 
+			{
+				return false;
+			}
 		}
 		else
 		{

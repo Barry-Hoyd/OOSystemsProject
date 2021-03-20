@@ -4,14 +4,16 @@
 class PlayerMonk
 {
 private: 
+	/*Player Name & Description*/
+	std::string name = "";
+	std::string description = "";
 	/*Health & Armour*/
 	int currentHealth = 15;
 	const int MAX_HEALTH = 15;
 	bool bCurrentlyHealing = false;
 	bool bIsDead = false;
 	/*Player Movement*/
-	int playerMap[3][3];
-	int playerCurrentRoomNumber = 7;
+	int playerLocation = 0;
 	/*Player Combat Stats*/
 	int armour = 0;
 	int damage = 3;
@@ -30,6 +32,14 @@ private:
 	
 	
 public:
+	/*Player Name & Desc Getters & Setters*/
+	std::string getName();
+
+	void setName(std::string name);
+
+	std::string getDesc();
+
+	void setDesc(std::string desc);
 
 	/*Player Health Getters & Setters*/
 	int getCurrentHealth();
@@ -45,6 +55,12 @@ public:
 	bool getDead();
 
 	void setDead(bool isTrue);
+
+	/*Player Movement Getters & Setters*/
+
+	int getPlayerLocation();
+
+	void setPlayerLocation(int newLocation);
 
 	/*Player Inventory FrameWork*/
 	void DisplayInventory();

@@ -1,9 +1,20 @@
 #include "PlayerMonk.h"
-#include "RoomGenerator.h"
-#include "UserInput.h"
-
-UserInput userInput;
-
+std::string PlayerMonk::getName()
+{
+	return name;
+}
+void PlayerMonk::setName(std::string name)
+{
+	this->name = name;
+}
+std::string PlayerMonk::getDesc()
+{
+	return description;
+}
+void PlayerMonk::setDesc(std::string desc)
+{
+	this->description = desc;
+}
 /*Sets Player Health*/
 int PlayerMonk::getCurrentHealth()
 {
@@ -12,7 +23,7 @@ int PlayerMonk::getCurrentHealth()
 
 void PlayerMonk::setCurrentHealth(int amount)
 {
-	currentHealth = amount;
+	this->currentHealth = amount;
 }
 
 const int PlayerMonk::getMaxHealth()
@@ -45,6 +56,16 @@ void PlayerMonk::setDead(bool isTrue)
 	{
 		bIsDead = true;
 	}
+}
+
+int PlayerMonk::getPlayerLocation()
+{
+	return playerLocation;
+}
+
+void PlayerMonk::setPlayerLocation(int newLocation)
+{
+	this->playerLocation = newLocation;
 }
 
 /*Player Inventory Functions*/

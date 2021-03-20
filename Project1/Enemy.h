@@ -23,10 +23,10 @@ public:
 	void Attack(int attackHitChance);
 };
 
-class Goblin : public Enemy
+class GoblinEnemy : public Enemy
 {
 public:
-	Goblin()
+	GoblinEnemy()
 	{
 		currentHealth = 10;
 		MAX_HEALTH = 10;
@@ -36,10 +36,10 @@ public:
 	}
 };
 
-class Oger : public Enemy
+class OgerEnemy : public Enemy
 {
 public:
-	Oger()
+	OgerEnemy()
 	{
 		currentHealth = 15;
 		MAX_HEALTH = 15;
@@ -49,10 +49,10 @@ public:
 	}
 };
 
-class Cyclops : public Enemy
+class CyclopsEnemy : public Enemy
 {
 public:
-	Cyclops()
+	CyclopsEnemy()
 	{
 		currentHealth = 5;
 		MAX_HEALTH = 5;

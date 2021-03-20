@@ -2,6 +2,7 @@
 #include "UserInput.h"
 #include "PlayerMonk.h"
 #include "RoomGenerator.h"
+#include "Enums.h"
 class PlayerMovement
 {
 	UserInput userInput;
@@ -12,6 +13,7 @@ private:
 	int playerLoaction = 7;
 
 public:
+	PlayerMovement();
 
 	int getPlayerLoaction();
 

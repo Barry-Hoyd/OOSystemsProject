@@ -140,16 +140,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FileReadWrite.cpp" />
     <ClCompile Include="PlayerMonk.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="PlayerMovement.cpp" />
     <ClCompile Include="RoomGenerator.cpp" />
     <ClCompile Include="UserInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Enums.h" />
+    <ClInclude Include="FileReadWrite.h" />
     <ClInclude Include="PlayerMonk.h" />
-    <ClInclude Include="PlayerMovement.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="UserInput.h" />
   </ItemGroup>

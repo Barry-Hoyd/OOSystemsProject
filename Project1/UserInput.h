@@ -10,14 +10,14 @@ class UserInput
 private:
 	string movementDirection = "";
 	int playerAction = 0;
-	char yesNo;
+	char yesNo = 'a';
 
 public:
 	string getMovementDirection();
 
-	void getPlayerAction();
+	int getPlayerAction();
 
-	void getYesNo();
+	char getYesNo();
 
 };
 

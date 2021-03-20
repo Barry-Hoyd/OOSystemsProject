@@ -3,31 +3,59 @@
 
 #include <iostream>
 #include <string>
-#include "PlayerMonk.h"
-#include "PlayerMovement.h"
 #include "Enemy.h"
-#include "UserInput.h"
+#include "Enums.h"
+#include "RoomGenerator.h"
+#include "FileReadWrite.h"
+
+//UserInput userInput;
+FileReadWrite fileReadWrite;
+UserInput mainUserInput;
+void Menu()
+{
+    int menuFunction = 0;
+    fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
+    menuFunction = mainUserInput.getPlayerAction();
+    system("CLS");
+    switch (menuFunction)
+    {
+    case(1):
+        std::cout << "Play Game";
+        break;
+    case(2):
+        fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        break;
+    case(3):
+        std::cout << "Help";
+        break;
+    case(4):
+        exit(0);
+        break;
+    }
+}
 
 int main()
 {
-    PlayerMonk playerMonk;
-    PlayerMovement playerMovement;
-    Goblin goblin;
-    Oger oger;
-    Cyclops cyclops;
+    
+    
 
-    UserInput userInput;
+    //std::cout << "You awaken in an empty room you have no idea how you got here but you know you must adventure to survive. \n";
+    //RoomGenerator roomGen;
+    //roomGen.GenerateMap(11);
+   // roomGen.spawnPlayer();
+    
 
     bool bGameOver = false;
+    Menu();
 
-    playerMovement.InitaliseMap();
-    playerMovement.SpawnPlayer();
-    while (!bGameOver)
+    //playerMovement.InitaliseMap();
+    //playerMovement.SpawnPlayer();
+   /* while (!bGameOver)
     {
         playerMovement.MovePlayer();
         playerMovement.DisplayMap();
 
-    }
+    }*/
 
 
 
@@ -87,4 +115,5 @@ int main()
     std::cout << "\n";
     */
 }
+
 
