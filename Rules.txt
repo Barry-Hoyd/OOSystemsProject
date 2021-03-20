@@ -1,0 +1,46 @@
+The Monk is able to Pray, Attack, Defend and Pick Up Items
+
+	         _.-/`)	      _____                      . . .     
+                // / / )     `.___,'                      \|/      
+             .=// / / / )     (___)                     `--+--'    
+            //`/ / / / /      <   >                       /|\    
+           // /     ` /        ) (                       ' | '    
+          ||         /	      /`-.\                        |
+          \\       /         /     \                   ,--'#`--. 
+           ))    .'         / _    _\                  |#######|
+          //    /          :,' `-.' `:              _.-'#######`-._    
+         /	           |         |	         ,-'###############`-.  
+   		           :         ;         ,'#####################`,
+    			    \       /         /#########################\ 
+                             `.___.'         |###########################| 
+				            |#############################|
+		                            |#############################|
+					    |#############################|
+					     |###########################|
+					      \#########################/ 
+				   	       `.#####################,'
+					         `._###############_,' 
+			        		   `--..#####..--'
+
+There are a different number of rooms to visit depending on the difficulty:
+Easy: 5 rooms 2 enemies.
+Medium 8 rooms 3 enemies.
+Hard 11 rooms 5 enemies.
+The rooms order will randomise on each playthrough of the game.
+
+Empty room - In this room there maybe items to help you along your quest that you can pick up.
+	     You can also pray here to recover to full health.
+
+Monster room - Fight monster's using attack, defend and items. Each combat action has a 50%
+	       chance of being successful. There are 3 different types of enemies:
+		A Goblin,
+		A Oger,
+		A Cyclops.
+
+Key room - This is where you will retrieve the key to unlock the treasure room.
+
+Treasure room - Once you have killed all dungeon monsters and have found the key,
+		you will be able to claim the treasure and escape.
+
+	Use the number keys on your keyboard to navigate the menu and inventory and
+		type out the direction fully to move in that direction.

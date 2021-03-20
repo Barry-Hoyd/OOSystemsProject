@@ -13,6 +13,7 @@ FileReadWrite fileReadWrite;
 UserInput mainUserInput;
 void Menu()
 {
+    system("CLS");
     int menuFunction = 0;
     fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
     menuFunction = mainUserInput.getPlayerAction();
@@ -24,9 +25,13 @@ void Menu()
         break;
     case(2):
         fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        menuFunction = mainUserInput.getPlayerAction();
+        Menu();
         break;
     case(3):
-        std::cout << "Help";
+        fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
+        menuFunction = mainUserInput.getPlayerAction();
+        Menu();
         break;
     case(4):
         exit(0);
