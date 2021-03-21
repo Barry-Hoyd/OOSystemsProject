@@ -11,6 +11,7 @@ public:
 	bool bCombatMove=0;
 	bool bisAttacking = false;
 	bool bisDefending = false;
+	bool bIsDead = false;
 
 	int getCurrentHealth();
 

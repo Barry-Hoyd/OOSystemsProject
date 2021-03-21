@@ -1,17 +1,21 @@
 #pragma once
-#include "Enums.h"
+
 
 #include <string>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+#include "Enums.h"
+#include "FileReadWrite.h"
 #include "PlayerMonk.h"
 #include "UserInput.h"
-
+static PlayerMonk playerMonk;
+static UserInput userInput;
 class RoomGenerator
 {
 public:
-	
+	int numberOfRooms = 9;
+	int numberOfEnemies = 3;
 	bool bCanMoveNorth = false;
 	bool bCanMoveSouth = false;
 	int roomNumber = 0;
@@ -20,12 +24,13 @@ public:
 	bool bHasBomb = false;
 	bool bHasStaff = false;
 	bool bHasArmour = false;
+	bool bHasKey = false;
 	bool bAlreadyVisited[100] = {};
 	std::string description;
 	RoomGenerator* Map;
 	RoomType aroomType;
 
-	void GenerateMap(int numberOfRooms);
+	void GenerateMap();
 
 	std::string getDescription();
 
@@ -34,6 +39,8 @@ public:
 	RoomType getRoomType();
 
 	void checkItemPickUP(int currentRoomNumber);
+
+	void checkIfRoomLocked(int currentRoomNumber);
 
 	void spawnPlayer();
 
@@ -76,8 +83,8 @@ public:
 		aroomType = roomType;
 		bCanMoveNorth = true;
 		bCanMoveSouth = true;
-		description = "You enter an empty room there is are doors in the north and south walls. After searching you find a key on the floor. Would you like to pick it up? \n";
-		bool bHasKey = true;
+		description = "You enter an empty room there is are doors in the north and south walls. After searching you find a key on the floor. \n";
+		bHasKey = true;
 	}
 };
 

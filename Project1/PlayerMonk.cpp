@@ -113,6 +113,10 @@ void PlayerMonk::AddItemToInventory(std::string ItemToAdd)
 				{
 					setHasStaff(true);
 				}
+				else if (ItemToAdd == "Key")
+				{
+					setHasKey(true);
+				}
 				break;
 			}
 		}

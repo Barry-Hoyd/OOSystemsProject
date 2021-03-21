@@ -19,5 +19,7 @@ public:
 
 	char getYesNo();
 
+	int getPlayerCombatMove();
+
 };
 

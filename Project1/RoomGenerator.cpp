@@ -1,8 +1,7 @@
 #include "RoomGenerator.h"
-PlayerMonk playerMonk;
-UserInput userInput;
 
-void RoomGenerator::GenerateMap(int numberOfRooms)
+
+void RoomGenerator::GenerateMap()
 {
 	srand((int)time(0)); //Used to randomise the attack pattern each time
 	Map = new RoomGenerator[numberOfRooms];
@@ -13,41 +12,38 @@ void RoomGenerator::GenerateMap(int numberOfRooms)
 			SpawnRoom spawnRoom(Spawn);
 			Map[0] = spawnRoom;
 		}
-		else if (x == numberOfRooms /2)
+		else if (x == numberOfRooms / 2)
 		{
 			KeyRoom keyRoom(x, Key);
 			Map[x] = keyRoom;
 		}
 		else if (x != numberOfRooms - 1)
 		{
-			int randomNumber = rand() % 3;
-
-			if (randomNumber <= 1)
+			if (x % 2 == 1 && x != numberOfRooms - 2)
 			{
 				int randomEquipment = rand() % 4;
 				{
 					if (randomEquipment == 0)
 					{
-						EmptyRoom emptyRoom(x,true, false, false, false,Empty);
+						EmptyRoom emptyRoom(x, true, false, false, false, Empty);
 						Map[x] = emptyRoom;
 					}
 					else if (randomEquipment == 1)
 					{
-						EmptyRoom emptyRoom(x,false, true, false, false, Empty);
+						EmptyRoom emptyRoom(x, false, true, false, false, Empty);
 						Map[x] = emptyRoom;
 					}
 					else if (randomEquipment == 2)
 					{
-						EmptyRoom emptyRoom(x,false, false, true, false, Empty);
+						EmptyRoom emptyRoom(x, false, false, true, false, Empty);
 						Map[x] = emptyRoom;
 					}
 					else if (randomEquipment == 3)
 					{
-						EmptyRoom emptyRoom(x,false, false, false, true, Empty);
+						EmptyRoom emptyRoom(x, false, false, false, true, Empty);
 						Map[x] = emptyRoom;
 					}
 				}
-
 			}
 			else
 			{
@@ -55,19 +51,23 @@ void RoomGenerator::GenerateMap(int numberOfRooms)
 
 				if (randomEnemy == 0)
 				{
-					MonsterRoom monsterRoom(x,true, Goblin, Monster);
+					MonsterRoom monsterRoom(x, true, Goblin, Monster);
 					Map[x] = monsterRoom;
+					numberOfEnemies--;
 				}
 				if (randomEnemy == 1)
 				{
-					MonsterRoom monsterRoom(x,true, Oger, Monster);
+					MonsterRoom monsterRoom(x, true, Oger, Monster);
 					Map[x] = monsterRoom;
+					numberOfEnemies--;
 				}
 				if (randomEnemy == 2)
 				{
-					MonsterRoom monsterRoom(x,true, Cyclops, Monster);
+					MonsterRoom monsterRoom(x, true, Cyclops, Monster);
 					Map[x] = monsterRoom;
+					numberOfEnemies--;
 				}
+
 			}
 		}
 		else
@@ -77,6 +77,7 @@ void RoomGenerator::GenerateMap(int numberOfRooms)
 		}
 	}
 }
+
 
 
 std::string RoomGenerator::getDescription()
@@ -96,9 +97,10 @@ RoomType RoomGenerator::getRoomType()
 
 void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 {
+	char yesOrNo = 'a';
 	if (!bAlreadyVisited[currentRoomNumber])
 	{
-		char yesOrNo = 'a';
+
 		if (Map[currentRoomNumber].bHasHealthPotion)
 		{
 			std::cout << "You have found a Health potion. \n";
@@ -148,11 +150,31 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 			}
 		}
 	}
-	else
+	if (Map[currentRoomNumber].bHasKey)
 	{
-		
+		std::cout << "You have found a Key. \n";
+		yesOrNo = userInput.getYesNo();
+		if (yesOrNo)
+		{
+			playerMonk.AddItemToInventory("Key");
+			std::cout << "You have added a key to your inventory. \n";
+			playerMonk.DisplayInventory();
+		}
 	}
-	
+}
+
+void RoomGenerator::checkIfRoomLocked(int currentRoomNumber)
+{
+	std::cout << "You approach a set of doors they are locked. \n";
+	if (!playerMonk.getKey())
+	{
+		std::cout << "You need a key to open them, maybe its in the dungeon somewhere. \n";
+	}
+	else 
+	{
+		std::cout << "You use the key you have found to unlock the doors. \n";
+		std::cout << "You are in room: " << currentRoomNumber << ". " << Map[currentRoomNumber].getDescription();
+	}
 }
 
 void RoomGenerator::spawnPlayer()
@@ -182,23 +204,34 @@ void RoomGenerator::movePlayer(int locationToMoveTo)
 {
 	int currentRoomNumber = locationToMoveTo;
 	bool bvalidInput = false;
-	std::cout << "You are in room: " << currentRoomNumber << ". " << Map[currentRoomNumber].getDescription();
-	playerMonk.setPlayerLocation(currentRoomNumber);
-
-	if (Map[locationToMoveTo].getRoomType() == Empty)
+	if (Map[currentRoomNumber].getRoomType() == Treasure)
 	{
-		checkItemPickUP(currentRoomNumber);
+		checkIfRoomLocked(currentRoomNumber);
+	}
+	else
+	{
+		std::cout << "You are in room: " << currentRoomNumber << ". " << Map[currentRoomNumber].getDescription();
+		playerMonk.setPlayerLocation(currentRoomNumber);
+
+		if (Map[currentRoomNumber].getRoomType() == Empty)
+		{
+			checkItemPickUP(currentRoomNumber);
+		}
+		else if (Map[currentRoomNumber].getRoomType() == Key)
+		{
+			checkItemPickUP(currentRoomNumber);
+		}	
 	}
 	do
 	{
 		std::string movementDirection = userInput.getMovementDirection();
-		if (movementDirection == "North" && Map[locationToMoveTo].bCanMoveNorth)
+		if (movementDirection == "North" && Map[currentRoomNumber].bCanMoveNorth)
 		{
 			bAlreadyVisited[currentRoomNumber] = true;
 			movePlayer(playerMonk.getPlayerLocation() + 1);
 			bvalidInput = true;
 		}
-		if (movementDirection == "South" && Map[locationToMoveTo].bCanMoveSouth)
+		if (movementDirection == "South" && Map[currentRoomNumber].bCanMoveSouth)
 		{
 			bAlreadyVisited[currentRoomNumber] = true;
 			movePlayer(playerMonk.getPlayerLocation() - 1);

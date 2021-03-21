@@ -85,3 +85,35 @@ char UserInput::getYesNo()
 		}
 	} while (!bValidInput);
 }
+
+int UserInput::getPlayerCombatMove()
+{
+	bool bValidInput = false;
+	std::cout << "It is your turn. \n";
+	std::cout << "[1] Attack \n";
+	std::cout << "[2] Defend \n";
+	std::cout << "[3] Use Item \n";
+	do
+	{
+		cin >> playerAction;
+		if (playerAction == 1 || playerAction == 2 || playerAction == 3)
+		{
+			if (playerAction == 1)
+			{
+				return 1;
+			}
+			else if (playerAction == 2)
+			{
+				return 2;
+			}
+			else if (playerAction == 3)
+			{
+				return 3;
+			}
+		}
+		else
+		{
+			std::cout << "Please enter a valid task to preform: ";
+		}
+	} while (!bValidInput);
+}
