@@ -10,7 +10,6 @@ private:
 	/*Health & Armour*/
 	int currentHealth = 15;
 	const int MAX_HEALTH = 15;
-	bool bCurrentlyHealing = false;
 	bool bIsDead = false;
 	/*Player Movement*/
 	int playerLocation = 0;
@@ -19,6 +18,7 @@ private:
 	int damage = 3;
 	bool isAttacking = false;
 	bool isDefending = false;
+	bool bIsInCombat = false;
 	/*Players Inventory*/
 	int inventorySize = 4;
 	int numberOfItemsInInventory = 0;
@@ -47,14 +47,12 @@ public:
 	void setCurrentHealth(int amount);
 
 	const int getMaxHealth();
-	
-	bool getCurrentlyHealing();
-
-	void setCurrentlyHealing(bool isTrue, int amount);
 
 	bool getDead();
 
 	void setDead(bool isTrue);
+
+	void DisplayPlayerStats();
 
 	/*Player Movement Getters & Setters*/
 
@@ -108,6 +106,10 @@ public:
 
 	void Defend();
 
-	void Attack();
+	bool Attack();
+
+	void setIsInCombat(bool istrue);
+
+	bool getIsInCombat();
 };
 

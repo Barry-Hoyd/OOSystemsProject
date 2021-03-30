@@ -17,11 +17,13 @@ public:
 
 	void setCurrentHealth(int amount);
 
-	void getCombatMove();
+	bool getCombatMove();
 
 	void Defend();
 
-	void Attack(int attackHitChance);
+	bool Attack(int attackHitChance);
+
+	bool CheckDead();
 };
 
 class GoblinEnemy : public Enemy

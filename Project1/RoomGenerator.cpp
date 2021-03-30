@@ -1,6 +1,5 @@
 #include "RoomGenerator.h"
 
-
 void RoomGenerator::GenerateMap()
 {
 	srand((int)time(0)); //Used to randomise the attack pattern each time
@@ -78,8 +77,6 @@ void RoomGenerator::GenerateMap()
 	}
 }
 
-
-
 std::string RoomGenerator::getDescription()
 {
 	return description;
@@ -95,6 +92,11 @@ RoomType RoomGenerator::getRoomType()
 	return aroomType;
 }
 
+EnemyType RoomGenerator::getEnemyType(int roomNumber)
+{
+	return this->aenemyType;
+}
+
 void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 {
 	char yesOrNo = 'a';
@@ -103,14 +105,13 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 
 		if (Map[currentRoomNumber].bHasHealthPotion)
 		{
-			std::cout << "You have found a Health potion. \n";
+			std::cout << "After searching you have found a Health potion. \n";
 			yesOrNo = userInput.getYesNo();
 			if (yesOrNo)
 			{
 				bHasHealthPotion = false;
 				playerMonk.AddItemToInventory("Health Potion");
-				std::cout << "You have added a health potion to your inventory. \n";
-				playerMonk.DisplayInventory();
+				std::cout << "You have added a health potion to your inventory. \n \n";
 			}
 		}
 		else if (Map[currentRoomNumber].bHasBomb)
@@ -121,8 +122,7 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 			{
 				bHasBomb = false;
 				playerMonk.AddItemToInventory("Bomb");
-				std::cout << "You have added a Bomb to your inventory. \n";
-				playerMonk.DisplayInventory();
+				std::cout << "You have added a Bomb to your inventory. \n \n";
 			}
 		}
 		else if (Map[currentRoomNumber].bHasStaff)
@@ -133,8 +133,7 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 			{
 				bHasStaff = false;
 				playerMonk.AddItemToInventory("Staff");
-				std::cout << "You have added a Staff to your inventory. \n";
-				playerMonk.DisplayInventory();
+				std::cout << "You have added a Staff to your inventory. \n \n";
 			}
 		}
 		else if (Map[currentRoomNumber].bHasArmour)
@@ -145,20 +144,18 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 			{
 				bHasArmour = false;
 				playerMonk.AddItemToInventory("Armour");
-				std::cout << "You have added a armour to your inventory. \n";
-				playerMonk.DisplayInventory();
+				std::cout << "You have added a armour to your inventory. \n \n";
 			}
 		}
 	}
 	if (Map[currentRoomNumber].bHasKey)
 	{
-		std::cout << "You have found a Key. \n";
+		std::cout << "You have found a Key. \n \n";
 		yesOrNo = userInput.getYesNo();
 		if (yesOrNo)
 		{
 			playerMonk.AddItemToInventory("Key");
-			std::cout << "You have added a key to your inventory. \n";
-			playerMonk.DisplayInventory();
+			std::cout << "You have added a key to your inventory. \n \n";
 		}
 	}
 }
@@ -182,13 +179,15 @@ void RoomGenerator::spawnPlayer()
 	bool bvalidInput = false;
 	playerMonk.setPlayerLocation(0);
 	int currentPlayerLocation = 0;
-	std::cout << "You are in room: " << 0 << ". " << Map[0].getDescription();
+	std::cout << Map[0].getDescription() << "\n";
+	playerMonk.DisplayPlayerStats();
 	do
 	{
 		if (userInput.getMovementDirection() == "North" && Map[0].bCanMoveNorth)
 		{
 			bvalidInput = true;
 			bAlreadyVisited[0] = true;
+			system("CLS");
 			movePlayer(currentPlayerLocation + 1);
 		}
 		else
@@ -198,45 +197,190 @@ void RoomGenerator::spawnPlayer()
 	} while (!bvalidInput);
 }
 
-
-
 void RoomGenerator::movePlayer(int locationToMoveTo)
 {
 	int currentRoomNumber = locationToMoveTo;
 	bool bvalidInput = false;
+	system("CLS");
 	if (Map[currentRoomNumber].getRoomType() == Treasure)
 	{
 		checkIfRoomLocked(currentRoomNumber);
 	}
 	else
 	{
-		std::cout << "You are in room: " << currentRoomNumber << ". " << Map[currentRoomNumber].getDescription();
+		std::cout << Map[currentRoomNumber].getDescription() << "\n";
 		playerMonk.setPlayerLocation(currentRoomNumber);
 
 		if (Map[currentRoomNumber].getRoomType() == Empty)
 		{
+			int playerActionChoice = 0;
+			playerMonk.DisplayPlayerStats();
+			std::cout << "\n";
 			checkItemPickUP(currentRoomNumber);
+			
+			while (!bvalidInput)
+			{
+				playerActionChoice = userInput.getPlayerRoomAction();
+				if (playerActionChoice == 1)
+				{
+					do
+					{
+						std::string movementDirection = userInput.getMovementDirection();
+						if (movementDirection == "North" && Map[currentRoomNumber].bCanMoveNorth)
+						{
+							bAlreadyVisited[currentRoomNumber] = true;
+							movePlayer(playerMonk.getPlayerLocation() + 1);
+							system("CLS");
+							bvalidInput = true;
+						}
+						if (movementDirection == "South" && Map[currentRoomNumber].bCanMoveSouth)
+						{
+							bAlreadyVisited[currentRoomNumber] = true;
+							system("CLS");
+							movePlayer(playerMonk.getPlayerLocation() - 1);
+							bvalidInput = true;
+						}
+					} while (!bvalidInput);
+				}
+				else if (playerActionChoice == 2)
+				{
+					std::cout << "You have chosen to pray restoring your health to full! \n";
+					playerMonk.setCurrentHealth(playerMonk.getMaxHealth());
+				}
+			}
 		}
 		else if (Map[currentRoomNumber].getRoomType() == Key)
 		{
+			playerMonk.DisplayPlayerStats();
+			std::cout << "\n";
 			checkItemPickUP(currentRoomNumber);
-		}	
+		}
+		else if (Map[currentRoomNumber].getRoomType() == Monster)
+		{
+			BeginCombat(Map[currentRoomNumber].getEnemyType(currentRoomNumber));
+		}
 	}
-	do
+}
+	
+void RoomGenerator::BeginCombat(EnemyType enemyType)
+{
+	if (enemyType == Goblin)
 	{
-		std::string movementDirection = userInput.getMovementDirection();
-		if (movementDirection == "North" && Map[currentRoomNumber].bCanMoveNorth)
+		GoblinEnemy goblinEnemy;
+		CombatLoop(goblinEnemy);
+	}
+	else if (enemyType == Cyclops)
+	{
+		CyclopsEnemy cyclopsEnemy;
+		CombatLoop(cyclopsEnemy);
+	}
+	else if (enemyType == Oger)
+	{
+		OgerEnemy ogerEmeny;
+		CombatLoop(ogerEmeny);
+	}
+}
+
+void RoomGenerator::CombatLoop(Enemy enemy)
+{
+	bool playersTurn = true;
+	bool validAction = false;
+	playerMonk.setIsInCombat(true);
+	
+	while (!playerMonk.getDead() && !enemy.bIsDead)
+	{
+		if (playersTurn)
 		{
-			bAlreadyVisited[currentRoomNumber] = true;
-			movePlayer(playerMonk.getPlayerLocation() + 1);
-			bvalidInput = true;
+			std::cout << "Players Turn \n";
+			int actionChoice = 0;
+			DisplayCombatStats(enemy);
+			actionChoice = userInput.getPlayerCombatMove();
+			switch (actionChoice)
+			{
+			case(1):
+				std::cout << "You have chosen to attack! \n";
+				playerMonk.setIsAttacking(true);
+				playerMonk.setIsDefending(false);
+				if (playerMonk.Attack())
+				{
+					enemy.currentHealth -= (playerMonk.getDamage() - enemy.armour);
+				}
+				validAction = true;
+				break;
+			case(2):
+				std::cout << "You have chosen to defend! \n";
+				playerMonk.setIsAttacking(false);
+				playerMonk.setIsDefending(true);
+				playerMonk.Defend();
+				validAction = true;
+				break;
+			case(3):
+				std::string itemToUse = "";
+				std::cout << "You have chosen to use an item! \n";
+				std::cout << "\n";
+				playerMonk.DisplayInventory();
+				itemToUse = userInput.getInventoryControl();
+				if (itemToUse == "Health")
+				{
+					playerMonk.UseHealthPotion();
+				}
+				else if (itemToUse == "Bomb")
+				{
+					playerMonk.UseBomb();
+					enemy.setCurrentHealth(0);
+				}
+				else if (itemToUse == "None")
+				{
+					validAction = false;
+				}
+				break;
+			}
+			if (enemy.CheckDead())
+			{
+				playerMonk.setIsInCombat(false);
+				system("CLS");
+				std::cout << "Enemy defeated! \n";
+			}
+			if (validAction)
+			{
+				playersTurn = false;
+				system("PAUSE");
+				system("CLS");
+			}
+			system("PAUSE");
+			system("CLS");
 		}
-		if (movementDirection == "South" && Map[currentRoomNumber].bCanMoveSouth)
+		else if (!playersTurn && !enemy.CheckDead())
 		{
-			bAlreadyVisited[currentRoomNumber] = true;
-			movePlayer(playerMonk.getPlayerLocation() - 1);
-			bvalidInput = true;
+			std::cout << "Enemy Turn\n";
+			if (enemy.getCombatMove())
+			{
+				if (enemy.Attack(enemy.attackHitChance))
+				{
+					playerMonk.setCurrentHealth(playerMonk.getCurrentHealth() - (enemy.damage - playerMonk.getArmour() ));
+					playerMonk.setDead(true);
+				}
+			}
+			else
+			{
+				enemy.Defend();
+			}
+			playersTurn = true;
 		}
-	} while (!bvalidInput);
+		if (playerMonk.getDead())
+		{
+			std::cout << "You have died! \n";
+			system("PAUSE");
+			exit(0);
+		}
+	}
+}
+
+void RoomGenerator::DisplayCombatStats(Enemy enemy)
+{
+	std::cout << "Player Health: " << playerMonk.getCurrentHealth() << "                   " << "Enemy Health: " << enemy.currentHealth << "\n";
+	std::cout << "Player Damage: " << playerMonk.getDamage() << "                   " << "Enemy Damage: " << enemy.damage << "\n";
+	std::cout << "Player Armour: " << playerMonk.getArmour() << "                   " << "Enemy Armour: " << enemy.armour << "\n";
+	std::cout << "\n";
 }
 

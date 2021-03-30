@@ -6,7 +6,6 @@
 #include "RoomGenerator.h"
 #include "FileReadWrite.h"
 
-
 FileReadWrite fileReadWrite;
 
 RoomGenerator roomGen;
@@ -77,10 +76,11 @@ void Menu()
     }
 }
 
-
-
 int main()
 {
+    
+    
+    //combat.StartCombat(Goblin);
     Menu();
     bool bGameOver = false;
     while (!bGameOver)

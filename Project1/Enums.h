@@ -8,7 +8,6 @@ enum RoomType {
 	Treasure
 };
 enum EnemyType {
-	None,
 	Goblin,
 	Oger,
 	Cyclops

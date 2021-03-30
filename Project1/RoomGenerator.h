@@ -6,11 +6,15 @@
 #include <cstdlib>
 #include <ctime>
 #include "Enums.h"
+#include "Enemy.h"
 #include "FileReadWrite.h"
 #include "PlayerMonk.h"
 #include "UserInput.h"
+
 static PlayerMonk playerMonk;
 static UserInput userInput;
+static Enemy enemy;
+
 class RoomGenerator
 {
 public:
@@ -25,10 +29,11 @@ public:
 	bool bHasStaff = false;
 	bool bHasArmour = false;
 	bool bHasKey = false;
-	bool bAlreadyVisited[100] = {};
+	bool bAlreadyVisited[15] = {};
 	std::string description;
 	RoomGenerator* Map;
 	RoomType aroomType;
+	EnemyType aenemyType;
 
 	void GenerateMap();
 
@@ -38,6 +43,8 @@ public:
 
 	RoomType getRoomType();
 
+	EnemyType getEnemyType(int roomNumber);
+
 	void checkItemPickUP(int currentRoomNumber);
 
 	void checkIfRoomLocked(int currentRoomNumber);
@@ -45,6 +52,12 @@ public:
 	void spawnPlayer();
 
 	void movePlayer(int locationToMoveTo);
+
+	void BeginCombat(EnemyType enemyType);
+
+	void CombatLoop(Enemy enemy);
+
+	void DisplayCombatStats(Enemy enemy);
 };
 
 class SpawnRoom : public RoomGenerator
@@ -106,6 +119,7 @@ public:
 	MonsterRoom(int roomNumber, bool HasEnemy, EnemyType enemyType, RoomType roomType)
 	{
 		aroomType = roomType;
+		aenemyType = enemyType;
 		bCanMoveNorth = true;
 		bCanMoveSouth = true;
 		bool bHasEnemy = HasEnemy;
@@ -124,7 +138,5 @@ public:
 			description = " You enter a room and are attacked by a Oger. ";
 			description += "\n";
 		}
-		
 	}
-
 };

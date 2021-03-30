@@ -12,7 +12,7 @@ void Enemy::setCurrentHealth(int amount)
 	currentHealth = amount;
 }
 
-void Enemy::getCombatMove()
+bool Enemy::getCombatMove()
 {
 	srand((unsigned)time(0)); //Used to randomise the attack pattern each time
 	int randomNumber = rand()%2;
@@ -21,29 +21,60 @@ void Enemy::getCombatMove()
 	{
 		bisAttacking = true;
 		bisDefending = false;
-		std::cout << "Attack" << "\n";
+		return true;
 	}
 	else if (randomNumber == 1)
 	{
 		bisDefending = true;
 		bisAttacking = false;
-		std::cout << "Defend" << "\n";
+		return false;
 	}
 }
 
 void Enemy::Defend()
 {
-	if (bisDefending && bisAttacking == false)
+	if (bisDefending && !bisAttacking)
 	{
-		setCurrentHealth(currentHealth++);
+		if (currentHealth < MAX_HEALTH)
+		{
+			std::cout << "The enemy defends and recovers 1hp! \n";
+			setCurrentHealth(currentHealth + 1);
+		}
+		else
+		{
+			std::cout << "The enemy defends but is already at max hp! \n";
+		}
 	}
 }
 
-void Enemy::Attack(int attackHitChance)
+bool Enemy::Attack(int attackHitChance)
 {
-	if (bisAttacking && bisDefending == false)
+	if (bisAttacking && !bisDefending)
 	{
 		srand((unsigned)time(0)); //Used to randomise the attack pattern each time
-		//int attackChance = rand() % attackChance;
+		int attackHitChance = rand() % 2;
+		if (attackHitChance == 0)
+		{
+			std::cout << "The enemy attacks and hits! \n";
+			return true;
+		}
+		else
+		{
+			std::cout << "The enemy attacks and misses! \n";
+			return false;
+		}
 	}
+}
+
+bool Enemy::CheckDead()
+{
+	if (currentHealth <= 0)
+	{
+		bIsDead = true;
+	}
+	else
+	{
+		bIsDead = false;
+	}
+	return bIsDead;
 }

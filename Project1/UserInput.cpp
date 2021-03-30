@@ -1,4 +1,5 @@
 #include "UserInput.h"
+#include "RoomGenerator.h"
 using namespace std;
 
 string UserInput::getMovementDirection()
@@ -89,25 +90,31 @@ char UserInput::getYesNo()
 int UserInput::getPlayerCombatMove()
 {
 	bool bValidInput = false;
+	playerActionCombat = 0;
 	std::cout << "It is your turn. \n";
 	std::cout << "[1] Attack \n";
 	std::cout << "[2] Defend \n";
 	std::cout << "[3] Use Item \n";
+	std::cout << "Action Choice: ";
 	do
 	{
-		cin >> playerAction;
-		if (playerAction == 1 || playerAction == 2 || playerAction == 3)
+		cin >> playerActionCombat;
+		if (playerActionCombat == 1 || playerActionCombat == 2 || playerActionCombat == 3)
 		{
-			if (playerAction == 1)
+			bValidInput = true;
+			if (playerActionCombat == 1)
 			{
+				cin.clear();
 				return 1;
 			}
-			else if (playerAction == 2)
+			else if (playerActionCombat == 2)
 			{
+				cin.clear();
 				return 2;
 			}
-			else if (playerAction == 3)
+			else if (playerActionCombat == 3)
 			{
+				cin.clear();
 				return 3;
 			}
 		}
@@ -115,5 +122,74 @@ int UserInput::getPlayerCombatMove()
 		{
 			std::cout << "Please enter a valid task to preform: ";
 		}
+		throw (playerActionCombat);
+	} while (!bValidInput);
+}
+
+string UserInput::getInventoryControl()
+{
+	bool bValidInput = false;
+	itemToUse = "";
+	std::cout << "Please select the item you want to use: ";
+	do
+	{
+		cin >> itemToUse;
+		if (itemToUse == "Health" || itemToUse == "Bomb")
+		{
+			bValidInput = true;
+			if (itemToUse == "Health")
+			{
+				return "Health";
+			}
+			else if (itemToUse == "Bomb")
+			{
+				return "Bomb";
+			}
+			
+		}
+		else
+		{
+			std::cout << "Only bombs and health potions can be used in combat! \n";
+			return "None";
+		}
+	} while (!bValidInput);
+}
+
+int UserInput::getPlayerRoomAction()
+{
+	bool bValidInput = false;
+	playerActionCombat = 0;
+	std::cout << "[1] Move \n";
+	std::cout << "[2] Pray \n";
+	std::cout << "[3] Inventory \n";
+	std::cout << "Action Choice: ";
+
+	do
+	{
+		cin >> playerActionCombat;
+		if (playerActionCombat == 1 || playerActionCombat == 2 || playerActionCombat == 3)
+		{
+			bValidInput = true;
+			if (playerActionCombat == 1)
+			{
+				cin.clear();
+				return 1;
+			}
+			else if (playerActionCombat == 2)
+			{
+				cin.clear();
+				return 2;
+			}
+			else if (playerActionCombat == 3)
+			{
+				cin.clear();
+				return 3;
+			}
+		}
+		else
+		{
+			std::cout << "Please enter a valid task to preform: ";
+		}
+		throw (playerActionCombat);
 	} while (!bValidInput);
 }

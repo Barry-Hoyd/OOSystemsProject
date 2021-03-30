@@ -9,9 +9,10 @@ class UserInput
 	
 private:
 	string movementDirection = "";
+	string itemToUse = "";
 	int playerAction = 0;
+	int playerActionCombat = 0;
 	char yesNo = 'a';
-
 public:
 	string getMovementDirection();
 
@@ -21,5 +22,8 @@ public:
 
 	int getPlayerCombatMove();
 
+	string getInventoryControl();
+
+	int getPlayerRoomAction();
 };
 

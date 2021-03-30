@@ -1,7 +1,7 @@
 #include "PlayerMonk.h"
 std::string PlayerMonk::getName()
 {
-	return name;
+	return this->name;
 }
 void PlayerMonk::setName(std::string name)
 {
@@ -9,7 +9,7 @@ void PlayerMonk::setName(std::string name)
 }
 std::string PlayerMonk::getDesc()
 {
-	return description;
+	return this->description;
 }
 void PlayerMonk::setDesc(std::string desc)
 {
@@ -18,7 +18,7 @@ void PlayerMonk::setDesc(std::string desc)
 /*Sets Player Health*/
 int PlayerMonk::getCurrentHealth()
 {
-	return currentHealth;
+	return this->currentHealth;
 }
 
 void PlayerMonk::setCurrentHealth(int amount)
@@ -28,39 +28,32 @@ void PlayerMonk::setCurrentHealth(int amount)
 
 const int PlayerMonk::getMaxHealth()
 {
-	return MAX_HEALTH;
-}
-
-bool PlayerMonk::getCurrentlyHealing()
-{
-	return bCurrentlyHealing;
-}
-
-void PlayerMonk::setCurrentlyHealing(bool isTrue, int amount)
-{
-	bCurrentlyHealing = isTrue;
-	if (bCurrentlyHealing)
-	{
-		setCurrentHealth(amount);
-	}
+	return this->MAX_HEALTH;
 }
 
 bool PlayerMonk::getDead()
 {
-	return bIsDead;
+	return this->bIsDead;
 }
 
 void PlayerMonk::setDead(bool isTrue)
 {
 	if (currentHealth <= 0)
 	{
-		bIsDead = true;
+		this->bIsDead = true;
 	}
+}
+
+void PlayerMonk::DisplayPlayerStats()
+{
+	std::cout << "Player Health: " << getCurrentHealth() << "\n";
+	std::cout << "Player Damage: " << getDamage() << "\n";
+	std::cout << "Player Armour: " << getArmour() << "\n";
 }
 
 int PlayerMonk::getPlayerLocation()
 {
-	return playerLocation;
+	return this->playerLocation;
 }
 
 void PlayerMonk::setPlayerLocation(int newLocation)
@@ -77,13 +70,13 @@ void PlayerMonk::DisplayInventory()
 		{
 			if (inventory[i] != "")
 			{
-				std::cout << inventory[i] << "\n";
+				std::cout << i+1 << ". " << inventory[i] << "\n";
 			}
 		}
 	}
 	else
 	{
-		std::cout << "\n" << "Your Inventory Is Empty";
+		std::cout << "\n" << "Your Inventory Is Empty \n";
 	}
 }
 
@@ -185,27 +178,27 @@ bool PlayerMonk::CheckInventoryForItem(std::string itemToCheckFor)
 
 void PlayerMonk::setHasHealthPotion(bool isTrue)
 {
-	bHasHealthPotion = isTrue;
+	this->bHasHealthPotion = isTrue;
 }
 
 void PlayerMonk::UseHealthPotion()
 {
 	if (bHasHealthPotion)
 	{
-		std::cout << "Player uses Healing Potion :" << "\n";
-		setCurrentlyHealing(true, 100);
+		std::cout << "Player uses Healing Potion! " << "\n";
+		setCurrentHealth(MAX_HEALTH);
 		RemoveItemFromInventory("Health Potion");
 	}
 }
 
 void PlayerMonk::setHasBomb(bool isTrue)
 {
-	bHasBomb = isTrue;
+	this->bHasBomb = isTrue;
 }
 
 void PlayerMonk::UseBomb()
 {
-	if (bHasBomb && CheckInventoryForItem("Bomb"))
+	if (bHasBomb)
 	{
 		std::cout << "Player drops a bomb" << "\n";
 		RemoveItemFromInventory("Bomb");
@@ -214,12 +207,12 @@ void PlayerMonk::UseBomb()
 
 void PlayerMonk::setHasArmour(bool isTrue)
 {
-	bHasArmour = isTrue;
+	this->bHasArmour = isTrue;
 }
 
 void PlayerMonk::EquipArmour()
 {
-	if (bHasArmour && CheckInventoryForItem("Armour"))
+	if (bHasArmour)
 	{
 		std::cout << "Player Equips Armour" << "\n";
 		armour = 2;
@@ -228,70 +221,102 @@ void PlayerMonk::EquipArmour()
 
 void PlayerMonk::setHasStaff(bool isTrue)
 {
-	bHasStaff = isTrue;
+	this->bHasStaff = isTrue;
+	EquipStaff();
 }
 
 void PlayerMonk::EquipStaff()
 {
-	if (bHasStaff && CheckInventoryForItem("Staff"))
+	if (bHasStaff)
 	{
-		std::cout << "Player Equips A Staff" << "\n";
-		damage = 5;
+		std::cout << "You equip a staff and your damage increases by 3 points! \n";
+		damage += 3;
 	}
 }
 
 bool PlayerMonk::getKey()
 {
-	return bHasKey;
+	return this->bHasKey;
 }
 
 void PlayerMonk::setHasKey(bool isTrue)
 {
-	bHasKey = isTrue;
+	this->bHasKey = isTrue;
 }
 
 int PlayerMonk::getArmour()
 {
-	return armour;
+	return this->armour;
 }
 
 int PlayerMonk::getDamage()
 {
-	return damage;
+	return this->damage;
 }
 
 bool PlayerMonk::getIsAttacking()
 {
-	return isAttacking;
+	return this->isAttacking;
 }
 
 void PlayerMonk::setIsAttacking(bool isTrue)
 {
-	isAttacking = isTrue;
-	setIsDefending(false);
+	this->isAttacking = isTrue;
 }
 
 bool PlayerMonk::getIsDefending()
 {
-	return isDefending;
+	return this->isDefending;
 }
 
 void PlayerMonk::setIsDefending(bool isTrue)
 {
-	isDefending = isTrue;
-	setIsAttacking(false);
+	this->isDefending = isTrue;
 }
 
 void PlayerMonk::Defend()
 {
-	if (isDefending && isAttacking == false)
+	if (isDefending && !isAttacking)
 	{
-		setCurrentHealth(currentHealth++);
+		if (currentHealth < MAX_HEALTH)
+		{
+			std::cout << "You defend and recover 1hp! \n";
+			setCurrentHealth(currentHealth + 1);
+		}
+		else
+		{
+			std::cout << "You defend but are already at max hp! \n";
+		}	
 	}
 }
 
-void PlayerMonk::Attack()
+bool PlayerMonk::Attack()
 {
+	if (!isDefending && isAttacking)
+	{
+		srand((unsigned)time(0)); //Used to randomise the attack pattern each time
+		int attackHitChance = rand() % 2;
+		if (attackHitChance == 0)
+		{
+			std::cout << "You attack and hit! \n";
+			return true;
+		}
+		else
+		{
+			std::cout << "You attack and miss! \n";
+			return false;
+		}
+	}
+}
+
+void PlayerMonk::setIsInCombat(bool istrue)
+{
+	bIsInCombat = istrue;
+}
+
+bool PlayerMonk::getIsInCombat()
+{
+	return bIsInCombat;
 }
 
 
