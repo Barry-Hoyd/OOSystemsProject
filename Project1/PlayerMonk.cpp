@@ -3,19 +3,23 @@ std::string PlayerMonk::getName()
 {
 	return this->name;
 }
+
 void PlayerMonk::setName(std::string name)
 {
 	this->name = name;
 }
+
 std::string PlayerMonk::getDesc()
 {
 	return this->description;
 }
+
 void PlayerMonk::setDesc(std::string desc)
 {
 	this->description = desc;
 }
-/*Sets Player Health*/
+
+/*Players Stats*/
 int PlayerMonk::getCurrentHealth()
 {
 	return this->currentHealth;
@@ -51,6 +55,7 @@ void PlayerMonk::DisplayPlayerStats()
 	std::cout << "Player Armour: " << getArmour() << "\n";
 }
 
+/*Player Location*/
 int PlayerMonk::getPlayerLocation()
 {
 	return this->playerLocation;
@@ -120,7 +125,6 @@ void PlayerMonk::AddItemToInventory(std::string ItemToAdd)
 	}
 }
 
-
 void PlayerMonk::RemoveItemFromInventory(std::string ItemToRemove)
 {
 	if (numberOfItemsInInventory > 0)
@@ -176,6 +180,12 @@ bool PlayerMonk::CheckInventoryForItem(std::string itemToCheckFor)
 	}
 }
 
+int PlayerMonk::getNumberOfItemsInInventory()
+{
+	return numberOfItemsInInventory;
+}
+
+/*Player Item Usage*/
 void PlayerMonk::setHasHealthPotion(bool isTrue)
 {
 	this->bHasHealthPotion = isTrue;
@@ -189,6 +199,12 @@ void PlayerMonk::UseHealthPotion()
 		setCurrentHealth(MAX_HEALTH);
 		RemoveItemFromInventory("Health Potion");
 	}
+}
+
+void PlayerMonk::dropHealthPotion()
+{
+	RemoveItemFromInventory("Health Potion");
+	std::cout << "You have dropped a Health Potion on the floor! \n";
 }
 
 void PlayerMonk::setHasBomb(bool isTrue)
@@ -205,6 +221,12 @@ void PlayerMonk::UseBomb()
 	}
 }
 
+void PlayerMonk::dropBomb()
+{
+	RemoveItemFromInventory("Bomb");
+	std::cout << "You have dropped an unlit Bomb on the floor! \n";
+}
+
 void PlayerMonk::setHasArmour(bool isTrue)
 {
 	this->bHasArmour = isTrue;
@@ -214,24 +236,34 @@ void PlayerMonk::EquipArmour()
 {
 	if (bHasArmour)
 	{
-		std::cout << "Player Equips Armour" << "\n";
+		std::cout << "You equip armour and increase your armour by 2 points! \n";
 		armour = 2;
 	}
+}
+
+void PlayerMonk::dropArmour()
+{
+	RemoveItemFromInventory("Armour");
+	std::cout << "You have dropped Armour on the floor! \n";
 }
 
 void PlayerMonk::setHasStaff(bool isTrue)
 {
 	this->bHasStaff = isTrue;
-	EquipStaff();
 }
 
-void PlayerMonk::EquipStaff()
-{
+void PlayerMonk::EquipStaff(){
 	if (bHasStaff)
 	{
 		std::cout << "You equip a staff and your damage increases by 3 points! \n";
 		damage += 3;
 	}
+}
+
+void PlayerMonk::dropStaff()
+{
+	RemoveItemFromInventory("Staff");
+	std::cout << "You have dropped a Staff on the floor! \n";
 }
 
 bool PlayerMonk::getKey()
@@ -244,6 +276,7 @@ void PlayerMonk::setHasKey(bool isTrue)
 	this->bHasKey = isTrue;
 }
 
+/*Combat */
 int PlayerMonk::getArmour()
 {
 	return this->armour;

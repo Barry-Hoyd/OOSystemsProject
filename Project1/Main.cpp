@@ -4,9 +4,6 @@
 #include <iostream>
 #include <string>
 #include "RoomGenerator.h"
-#include "FileReadWrite.h"
-
-FileReadWrite fileReadWrite;
 
 RoomGenerator roomGen;
 
@@ -26,10 +23,10 @@ void MainGame()
     std::cout << "A bit about you " << playerMonk.getDesc() << ".\n";
     std::cout << "There will be " << roomGen.numberOfRooms-1 << " rooms.\n";
     std::cout << "There will be " << roomGen.numberOfEnemies << " enemies.\n";
+    std::cout << "You awaken in an empty room you have no idea how you got here but you know you must adventure to survive. \n";
     system("PAUSE");
     system("CLS");
-    std::cout << "You awaken in an empty room you have no idea how you got here but you know you must adventure to survive. \n";
-    roomGen.GenerateMap();
+    roomGen.generateMap();
     roomGen.spawnPlayer();
 }
 
@@ -38,6 +35,7 @@ void Menu()
     system("CLS");
     int menuFunction = 0;
     fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
+    cout << "Option: ";
     menuFunction = userInput.getPlayerAction();
     system("CLS");
     switch (menuFunction)
@@ -47,6 +45,7 @@ void Menu()
         break;
     case(2):
         fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        cout << "Option: ";
         menuFunction = userInput.getPlayerAction();
         if (menuFunction == 1)
         {
@@ -67,7 +66,7 @@ void Menu()
         break;
     case(3):
         fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
-        menuFunction = userInput.getPlayerAction();
+        system("PAUSE");
         Menu();
         break;
     case(4):
@@ -78,16 +77,13 @@ void Menu()
 
 int main()
 {
-    
-    
-    //combat.StartCombat(Goblin);
+    system("Color 09");
     Menu();
     bool bGameOver = false;
     while (!bGameOver)
     {
         MainGame();
     }
-    
 }
 
 

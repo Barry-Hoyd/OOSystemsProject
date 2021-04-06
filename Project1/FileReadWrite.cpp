@@ -14,7 +14,5 @@ void FileReadWrite::DisplayFile(string filePath)
 	{
 		cout << "could not find file path";
 	}
-
-	cout << "Option: ";
 	Menuinput.close();
 }

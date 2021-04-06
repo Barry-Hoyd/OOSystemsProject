@@ -14,6 +14,7 @@
 static PlayerMonk playerMonk;
 static UserInput userInput;
 static Enemy enemy;
+static FileReadWrite fileReadWrite;
 
 class RoomGenerator
 {
@@ -32,10 +33,10 @@ public:
 	bool bAlreadyVisited[15] = {};
 	std::string description;
 	RoomGenerator* Map;
-	RoomType aroomType;
-	EnemyType aenemyType;
+	RoomType CurrentRoomType;
+	EnemyType enemyRoomType;
 
-	void GenerateMap();
+	void generateMap();
 
 	std::string getDescription();
 
@@ -51,13 +52,17 @@ public:
 
 	void spawnPlayer();
 
-	void movePlayer(int locationToMoveTo);
+	void playerAction(int currentRoomNumber);
 
-	void BeginCombat(EnemyType enemyType);
+	void roomEventGenerator(int locationToMoveTo);
 
-	void CombatLoop(Enemy enemy);
+	void movePlayerDirection(int currentRoomNumber);
 
-	void DisplayCombatStats(Enemy enemy);
+	void beginCombat(EnemyType enemyType);
+
+	void combatLoop(Enemy enemy);
+
+	void displayCombatStats(Enemy enemy);
 };
 
 class SpawnRoom : public RoomGenerator
@@ -65,10 +70,10 @@ class SpawnRoom : public RoomGenerator
 public:
 	SpawnRoom(RoomType roomType)
 	{
-		aroomType = roomType;
+		CurrentRoomType = roomType;
 		roomNumber = 0;
 		bCanMoveNorth = true;
-		description = "This is an empty room, there is a door in the North Wall. \n";
+		description = "This is the first room, there is a door in the North Wall. \n";
 	}
 };
 
@@ -77,7 +82,7 @@ class EmptyRoom : public RoomGenerator
 public:
 	EmptyRoom(int roomNumber, bool HasHealthPotion, bool HasBomb, bool HasStaff, bool HasArmour, RoomType roomType)
 	{
-		aroomType = roomType;
+		CurrentRoomType = roomType;
 		bCanMoveNorth = true;
 		bCanMoveSouth = true;
 		this->bHasHealthPotion = HasHealthPotion;
@@ -93,10 +98,10 @@ class KeyRoom : public RoomGenerator
 public:
 	KeyRoom(int roomNumber, RoomType roomType)
 	{
-		aroomType = roomType;
+		CurrentRoomType = roomType;
 		bCanMoveNorth = true;
 		bCanMoveSouth = true;
-		description = "You enter an empty room there is are doors in the north and south walls. After searching you find a key on the floor. \n";
+		description = "You enter an empty room there is are doors in the north and south walls. \n";
 		bHasKey = true;
 	}
 };
@@ -106,7 +111,7 @@ class TreasureRoom :public  RoomGenerator
 public:
 	TreasureRoom(int roomNumber, RoomType roomType)
 	{
-		aroomType = roomType;
+		CurrentRoomType = roomType;
 		bCanMoveNorth = false;
 		bCanMoveSouth = true;
 		description = "You enter a room and you cannot believe your eyes it is over flowing with treasure. \n";
@@ -118,25 +123,21 @@ class MonsterRoom : public RoomGenerator
 public:
 	MonsterRoom(int roomNumber, bool HasEnemy, EnemyType enemyType, RoomType roomType)
 	{
-		aroomType = roomType;
-		aenemyType = enemyType;
+		CurrentRoomType = roomType;
+		enemyRoomType = enemyType;
 		bCanMoveNorth = true;
 		bCanMoveSouth = true;
-		bool bHasEnemy = HasEnemy;
 		if (enemyType == Goblin)
 		{
-			description = "You enter a room and are attacked by a Goblin. ";
-			description += "\n";
+			description = "You enter a room and are attacked by a Goblin. \n";
 		}
 		else if (enemyType == Cyclops)
 		{
-			description = " You enter a room and are attacked by a Cyclops. ";
-			description += "\n";
+			description = "You enter a room and are attacked by a Cyclops. \n";
 		}
 		else if (enemyType == Oger)
 		{
-			description = " You enter a room and are attacked by a Oger. ";
-			description += "\n";
+			description = " You enter a room and are attacked by a Oger. \n";
 		}
 	}
 };

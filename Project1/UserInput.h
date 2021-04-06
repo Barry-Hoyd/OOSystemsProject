@@ -22,8 +22,10 @@ public:
 
 	int getPlayerCombatMove();
 
-	string getInventoryControl();
+	string getInventoryCombatControl();
 
 	int getPlayerRoomAction();
+
+	string getPlayerInventoryAction();
 };
 

@@ -68,6 +68,7 @@ char UserInput::getYesNo()
 	do
 	{
 		cin >> yesNo;
+		
 		if (yesNo == 'Y' || yesNo == 'N')
 		{
 			bValidInput = true;
@@ -126,7 +127,7 @@ int UserInput::getPlayerCombatMove()
 	} while (!bValidInput);
 }
 
-string UserInput::getInventoryControl()
+string UserInput::getInventoryCombatControl()
 {
 	bool bValidInput = false;
 	itemToUse = "";
@@ -145,7 +146,6 @@ string UserInput::getInventoryControl()
 			{
 				return "Bomb";
 			}
-			
 		}
 		else
 		{
@@ -161,13 +161,14 @@ int UserInput::getPlayerRoomAction()
 	playerActionCombat = 0;
 	std::cout << "[1] Move \n";
 	std::cout << "[2] Pray \n";
-	std::cout << "[3] Inventory \n";
+	std::cout << "[3] Drop Item In Inventory \n";
+	std::cout << "[4] Display Inventory \n";
 	std::cout << "Action Choice: ";
 
 	do
 	{
 		cin >> playerActionCombat;
-		if (playerActionCombat == 1 || playerActionCombat == 2 || playerActionCombat == 3)
+		if (playerActionCombat == 1 || playerActionCombat == 2 || playerActionCombat == 3 || playerActionCombat == 4)
 		{
 			bValidInput = true;
 			if (playerActionCombat == 1)
@@ -185,11 +186,51 @@ int UserInput::getPlayerRoomAction()
 				cin.clear();
 				return 3;
 			}
+			else if (playerActionCombat == 4)
+			{
+				cin.clear();
+				return 4;
+			}
 		}
 		else
 		{
 			std::cout << "Please enter a valid task to preform: ";
 		}
 		throw (playerActionCombat);
+	} while (!bValidInput);
+}
+
+string UserInput::getPlayerInventoryAction()
+{
+	bool bValidInput = false;
+	itemToUse = "";
+	std::cout << "Please select the item you want to drop: ";
+	do
+	{
+		cin >> itemToUse;
+		if (itemToUse == "Health" || itemToUse == "Bomb" || itemToUse == "Staff" || itemToUse == "Armour")
+		{
+			bValidInput = true;
+			if (itemToUse == "Health")
+			{
+				return "Health";
+			}
+			else if (itemToUse == "Bomb")
+			{
+				return "Bomb";
+			}
+			else if (itemToUse == "Staff")
+			{
+				return "Staff";
+			}
+			else if (itemToUse == "Armour")
+			{
+				return "Armour";
+			}
+		}
+		else
+		{
+			std::cout << "Please enter a valid item to remove from your inventory! \n";
+		}
 	} while (!bValidInput);
 }

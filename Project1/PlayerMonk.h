@@ -15,7 +15,7 @@ private:
 	int playerLocation = 0;
 	/*Player Combat Stats*/
 	int armour = 0;
-	int damage = 3;
+	int damage = 200;
 	bool isAttacking = false;
 	bool isDefending = false;
 	bool bIsInCombat = false;
@@ -69,22 +69,32 @@ public:
 
 	bool CheckInventoryForItem(std::string itemToCheckFor);
 
+	int getNumberOfItemsInInventory();
+
 	/*Consumables & Weapons*/
 	void setHasHealthPotion(bool isTrue);
 
 	void UseHealthPotion();
 
+	void dropHealthPotion();
+
 	void setHasBomb(bool isTrue);
 
 	void UseBomb();
+
+	void dropBomb();
 
 	void setHasArmour(bool isTrue);
 
 	void EquipArmour();
 
+	void dropArmour();
+
 	void setHasStaff(bool isTrue);
 
 	void EquipStaff();
+
+	void dropStaff();
 
 	bool getKey();
 
