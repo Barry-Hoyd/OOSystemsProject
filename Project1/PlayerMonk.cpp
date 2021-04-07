@@ -66,6 +66,26 @@ void PlayerMonk::setPlayerLocation(int newLocation)
 	this->playerLocation = newLocation;
 }
 
+int PlayerMonk::getNumberOfRoomsVisited()
+{
+	return numberOfRoomsVisited;
+}
+
+void PlayerMonk::setNumberOfRoomsVisited()
+{
+	numberOfRoomsVisited++;
+}
+
+int PlayerMonk::getNumberOfEnemiesDefeated()
+{
+	return numberOfEnemiesDefeated;
+}
+
+void PlayerMonk::setNumberOfEnemiesDefeated()
+{
+	numberOfEnemiesDefeated++;
+}
+
 /*Player Inventory Functions*/
 void PlayerMonk::DisplayInventory()
 {

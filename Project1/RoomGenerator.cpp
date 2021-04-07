@@ -75,6 +75,28 @@ void RoomGenerator::generateMap()
 			Map[x] = treasureRoom;
 		}
 	}
+	setGameDifficulty(numberOfRooms);
+}
+
+void RoomGenerator::setGameDifficulty(int numberOfrooms)
+{
+	if (numberOfrooms == 6)
+	{
+		difficulty = "Easy";
+	}
+	else if (numberOfrooms == 8)
+	{
+		difficulty = "Medium";
+	}
+	else
+	{
+		difficulty = "Hard";
+	}
+}
+
+std::string RoomGenerator::getGamedifficulty()
+{
+	return difficulty;
 }
 
 std::string RoomGenerator::getDescription()
@@ -173,19 +195,37 @@ void RoomGenerator::checkIfRoomLocked(int currentRoomNumber)
 	else 
 	{
 		std::cout << "You use the key you have found to unlock the doors. \n";
-		std::cout << "You are in room: " << currentRoomNumber << ". " << Map[currentRoomNumber].getDescription();
+		std::cout <<  Map[currentRoomNumber].getDescription() << "\n";
 	}
 }
 
 void RoomGenerator::spawnPlayer()
 {
+	std::string playerName = "";
+	std::string playerDescription = "";
+	std::cout << "Please enter a name for you character: ";
+	std::cin >> playerName;
+	std::cout << "Please enter a description about your charcater: ";
+	std::cin >> playerDescription;
+	playerMonk.setName(playerName);
+	playerMonk.setDesc(playerDescription);
+	system("CLS");
+	fileReadWrite.writeToFile("Test");
+	fileReadWrite.writeToFile("Test2");
+	std::cout << "Your name is " << playerMonk.getName() << ".\n";
+	std::cout << "A bit about you " << playerMonk.getDesc() << ".\n";
+	std::cout << "You awaken in an empty room you have no idea how you got here but you know you must adventure to survive. \n";
+	system("PAUSE");
+	system("CLS");
+
 	system("Color 0B");
 	bool bvalidInput = false;
 	playerMonk.setPlayerLocation(0);
 	int currentPlayerLocation = 0;
-	fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+	fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
 	std::cout << Map[0].getDescription() << "\n";	
 	playerMonk.DisplayPlayerStats();
+	playerMonk.setNumberOfRoomsVisited();
 	playerAction(0);
 }
 
@@ -260,9 +300,11 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 	system("CLS");
 	if (Map[currentRoomNumber].getRoomType() == Treasure)
 	{
-		fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Treasure.txt");
+		fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Treasure.txt");
 		system("Color 0E");
 		checkIfRoomLocked(currentRoomNumber);
+		playerMonk.setNumberOfRoomsVisited();
+		displayWinStats(true);
 		system("PAUSE");
 	}
 	else
@@ -270,8 +312,9 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 		playerMonk.setPlayerLocation(currentRoomNumber);
 		if (Map[currentRoomNumber].getRoomType() == Empty)
 		{
+			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0B");
-			fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
 			std::cout << Map[currentRoomNumber].getDescription() << "\n";
 			playerMonk.DisplayPlayerStats();
 			std::cout << "\n";
@@ -280,8 +323,9 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 		}
 		else if (Map[currentRoomNumber].getRoomType() == Key)
 		{
+			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0B");
-			fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
 			std::cout << Map[currentRoomNumber].getDescription() << "\n";
 			playerMonk.DisplayPlayerStats();
 			std::cout << "\n";
@@ -290,6 +334,7 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 		}
 		else if (Map[currentRoomNumber].getRoomType() == Monster)
 		{
+			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0C");
 			beginCombat(Map[currentRoomNumber].getEnemyType(currentRoomNumber));
 			movePlayerDirection(currentRoomNumber);
@@ -362,7 +407,7 @@ void RoomGenerator::combatLoop(Enemy enemy)
 		
 		if (playersTurn)
 		{
-			fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
 			std::cout << "Players Turn \n";
 			int actionChoice = 0;
 			displayCombatStats(enemy);
@@ -417,12 +462,13 @@ void RoomGenerator::combatLoop(Enemy enemy)
 			{
 				playerMonk.setIsInCombat(false);
 				std::cout << "Enemy defeated! \n";
+				playerMonk.setNumberOfEnemiesDefeated();
 			}
 		}
 		else if (!playersTurn && !enemy.CheckDead())
 		{
 			system("CLS");
-			fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
 			displayCombatStats(enemy);
 			std::cout << "Enemy Turn\n";
 			if (enemy.getCombatMove())
@@ -445,7 +491,8 @@ void RoomGenerator::combatLoop(Enemy enemy)
 		{
 			std::cout << "You have died! \n";
 			system("PAUSE");
-			exit(0);
+			system("CLS");
+			displayWinStats(false);
 		}
 	}
 }
@@ -456,5 +503,27 @@ void RoomGenerator::displayCombatStats(Enemy enemy)
 	std::cout << "Player Damage: " << playerMonk.getDamage() << "                  " << "Enemy Damage: " << enemy.damage << "\n";
 	std::cout << "Player Armour: " << playerMonk.getArmour() << "                   " << "Enemy Armour: " << enemy.armour << "\n";
 	std::cout << "\n";
+}
+
+void RoomGenerator::displayWinStats(bool won)
+{
+	std::cout << "Monk Name: " << playerMonk.getName() << "\n";
+	std::cout << "Monk's Description: " << playerMonk.getDesc() << "\n";
+	std::cout << "Monk's Health: " << playerMonk.getCurrentHealth() << "\n";
+	std::cout << "Monk's Damage: " << playerMonk.getDamage() << "\n";
+	std::cout << "Monk's Armour: " << playerMonk.getArmour() << "\n";
+	std::cout << "Rooms Visited: " << playerMonk.getNumberOfRoomsVisited() << "\n";
+	std::cout << "Enemeies Defeated: " << playerMonk.getNumberOfEnemiesDefeated() << "\n";
+	std::cout << "Game Difficulty: " << getGamedifficulty() << "\n";
+	if (won)
+	{
+		std::cout << "Game Result: Won \n";
+	}
+	else
+	{
+		std::cout << "Game Result: Lost \n";
+	}
+	std::cout << "For More Infomation - Check Out The Game Logs \n";
+	exit(0);
 }
 

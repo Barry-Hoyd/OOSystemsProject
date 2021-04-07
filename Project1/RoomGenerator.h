@@ -18,6 +18,8 @@ static FileReadWrite fileReadWrite;
 
 class RoomGenerator
 {
+private:
+	std::string difficulty = "Medium";
 public:
 	int numberOfRooms = 9;
 	int numberOfEnemies = 3;
@@ -37,6 +39,10 @@ public:
 	EnemyType enemyRoomType;
 
 	void generateMap();
+
+	void setGameDifficulty(int numberOfrooms);
+
+	std::string getGamedifficulty();
 
 	std::string getDescription();
 
@@ -63,6 +69,8 @@ public:
 	void combatLoop(Enemy enemy);
 
 	void displayCombatStats(Enemy enemy);
+
+	void displayWinStats(bool won);
 };
 
 class SpawnRoom : public RoomGenerator

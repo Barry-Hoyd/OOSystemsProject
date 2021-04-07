@@ -13,6 +13,8 @@ private:
 	bool bIsDead = false;
 	/*Player Movement*/
 	int playerLocation = 0;
+	int numberOfRoomsVisited = 0;
+	int numberOfEnemiesDefeated = 0;
 	/*Player Combat Stats*/
 	int armour = 0;
 	int damage = 200;
@@ -59,6 +61,14 @@ public:
 	int getPlayerLocation();
 
 	void setPlayerLocation(int newLocation);
+
+	int getNumberOfRoomsVisited();
+
+	void setNumberOfRoomsVisited();
+
+	int getNumberOfEnemiesDefeated();
+
+	void setNumberOfEnemiesDefeated();
 
 	/*Player Inventory FrameWork*/
 	void DisplayInventory();

@@ -7,34 +7,11 @@
 
 RoomGenerator roomGen;
 
-void MainGame()
-{
-    std::string playerName = "";
-    std::string playerDescription = "";
-    std::cout << "Please enter a name for you character: ";
-    std::cin >> playerName;
-    std::cout << "Please enter a description about your charcater: ";
-    std::cin >> playerDescription;
-    playerMonk.setName(playerName);
-    playerMonk.setDesc(playerDescription);
-    system("CLS");
-
-    std::cout << "Your name is " << playerMonk.getName() << ".\n";
-    std::cout << "A bit about you " << playerMonk.getDesc() << ".\n";
-    std::cout << "There will be " << roomGen.numberOfRooms-1 << " rooms.\n";
-    std::cout << "There will be " << roomGen.numberOfEnemies << " enemies.\n";
-    std::cout << "You awaken in an empty room you have no idea how you got here but you know you must adventure to survive. \n";
-    system("PAUSE");
-    system("CLS");
-    roomGen.generateMap();
-    roomGen.spawnPlayer();
-}
-
 void Menu()
 {
     system("CLS");
     int menuFunction = 0;
-    fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
+    fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
     cout << "Option: ";
     menuFunction = userInput.getPlayerAction();
     system("CLS");
@@ -44,7 +21,7 @@ void Menu()
         std::cout << "Play Game \n";
         break;
     case(2):
-        fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
         cout << "Option: ";
         menuFunction = userInput.getPlayerAction();
         if (menuFunction == 1)
@@ -65,7 +42,7 @@ void Menu()
         Menu();
         break;
     case(3):
-        fileReadWrite.DisplayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
+        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
         system("PAUSE");
         Menu();
         break;
@@ -77,13 +54,11 @@ void Menu()
 
 int main()
 {
+    fileReadWrite.clearGameLog();
     system("Color 09");
     Menu();
-    bool bGameOver = false;
-    while (!bGameOver)
-    {
-        MainGame();
-    }
+    roomGen.generateMap();
+    roomGen.spawnPlayer();
 }
 
 

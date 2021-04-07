@@ -8,7 +8,12 @@ class FileReadWrite
 {
 private:
 	string line = "";
+	
 public:
-	void DisplayFile(string filePath);
+	void clearGameLog();
+
+	void displayFile(string filePath);
+
+	void writeToFile(string message);
 };
 
