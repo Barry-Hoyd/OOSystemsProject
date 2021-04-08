@@ -196,7 +196,6 @@ int UserInput::getPlayerRoomAction()
 		{
 			std::cout << "Please enter a valid task to preform: ";
 		}
-		throw (playerActionCombat);
 	} while (!bValidInput);
 }
 

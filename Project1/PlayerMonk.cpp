@@ -246,6 +246,7 @@ void PlayerMonk::dropArmour()
 {
 	RemoveItemFromInventory("Armour");
 	std::cout << "You have dropped Armour on the floor! \n";
+	armour -= 2;
 }
 
 void PlayerMonk::setHasStaff(bool isTrue)
@@ -265,6 +266,7 @@ void PlayerMonk::dropStaff()
 {
 	RemoveItemFromInventory("Staff");
 	std::cout << "You have dropped a Staff on the floor! \n";
+	damage -= 3;
 }
 
 bool PlayerMonk::getKey()
