@@ -2,15 +2,20 @@
 
 void FileReadWrite::clearGameLog()
 {
+	//clears game log at start of the game
 	ofstream gameLogFile;
-	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ofstream::out | ofstream::trunc);
+	//PC filepath
+	//gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ofstream::out | ofstream::trunc);
+	//Laptop filepath
+	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\GameLog.txt", ofstream::out | ofstream::trunc);
 	gameLogFile.close();
 }
 
 void FileReadWrite::displayFile(string filePath)
 {
+	//used to display the ASCII art for the player
 	ifstream Menuinput(filePath);
-	if (Menuinput.is_open())
+	if (Menuinput.is_open()) //checks if the file path is valid
 	{
 		while (getline(Menuinput, line))
 		{
@@ -26,6 +31,7 @@ void FileReadWrite::displayFile(string filePath)
 
 void FileReadWrite::writeToFile(string message)
 {
+	//write stats to game log
 	ofstream gameLogFile;
 	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ios::app);
 	if (gameLogFile.is_open())

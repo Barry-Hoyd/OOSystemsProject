@@ -11,7 +11,10 @@ void Menu()
 {
     system("CLS");
     int menuFunction = 0;
-    fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
+    //PC filepath
+    //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
+    //Laptop filepath
+    fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Menu.txt");
     cout << "Option: ";
     menuFunction = userInput.getPlayerAction();
     system("CLS");
@@ -21,9 +24,13 @@ void Menu()
         std::cout << "Play Game \n";
         break;
     case(2):
-        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        //PC filepath
+        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        //Laptop filepath
+        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Difficutly.txt");
         cout << "Option: ";
         menuFunction = userInput.getPlayerAction();
+        //sets the difficulty of the game
         if (menuFunction == 1)
         {
             roomGen.numberOfRooms = 6;
@@ -42,7 +49,11 @@ void Menu()
         Menu();
         break;
     case(3):
-        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
+        //PC filepath
+        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
+        //Laptop filepath
+        //displays the rules
+        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Rules.txt");
         system("PAUSE");
         Menu();
         break;
@@ -54,6 +65,7 @@ void Menu()
 
 int main()
 {
+    //clears gamelog and begins the game
     fileReadWrite.clearGameLog();
     system("Color 09");
     Menu();

@@ -139,7 +139,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Combat.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FileReadWrite.cpp" />
     <ClCompile Include="PlayerMonk.cpp" />
@@ -148,13 +147,15 @@
     <ClCompile Include="UserInput.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Combat.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Enums.h" />
     <ClInclude Include="FileReadWrite.h" />
     <ClInclude Include="PlayerMonk.h" />
     <ClInclude Include="RoomGenerator.h" />
     <ClInclude Include="UserInput.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

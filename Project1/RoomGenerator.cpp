@@ -2,42 +2,42 @@
 
 void RoomGenerator::generateMap()
 {
-	srand((int)time(0)); //Used to randomise the attack pattern each time
+	srand((int)time(0)); //Used to randomise the room pattern each time
 	Map = new RoomGenerator[numberOfRooms];
 	for (int x = 0; x < numberOfRooms; x++)
 	{
-		if (x == 0)
+		if (x == 0) //first room is always spawn
 		{
 			SpawnRoom spawnRoom(Spawn);
 			Map[0] = spawnRoom;
 		}
-		else if (x == numberOfRooms / 2)
+		else if (x == numberOfRooms / 2) //halfway room is always key room
 		{
 			KeyRoom keyRoom(x, Key);
 			Map[x] = keyRoom;
 		}
-		else if (x != numberOfRooms - 1)
+		else if (x != numberOfRooms - 1) //for every room except the last make it empty or monster
 		{
 			if (x % 2 == 1 && x != numberOfRooms - 2)
 			{
-				int randomEquipment = rand() % 4;
+				int randomEquipment = rand() % 4; //used to randomise what equipment is in an empty room
 				{
-					if (randomEquipment == 0)
+					if (randomEquipment == 0) //health potion
 					{
 						EmptyRoom emptyRoom(x, true, false, false, false, Empty);
 						Map[x] = emptyRoom;
 					}
-					else if (randomEquipment == 1)
+					else if (randomEquipment == 1) //bomb
 					{
 						EmptyRoom emptyRoom(x, false, true, false, false, Empty);
 						Map[x] = emptyRoom;
 					}
-					else if (randomEquipment == 2)
+					else if (randomEquipment == 2) //staff
 					{
 						EmptyRoom emptyRoom(x, false, false, true, false, Empty);
 						Map[x] = emptyRoom;
 					}
-					else if (randomEquipment == 3)
+					else if (randomEquipment == 3) //armour
 					{
 						EmptyRoom emptyRoom(x, false, false, false, true, Empty);
 						Map[x] = emptyRoom;
@@ -46,21 +46,21 @@ void RoomGenerator::generateMap()
 			}
 			else
 			{
-				int randomEnemy = rand() % 3;
+				int randomEnemy = rand() % 3;//selects what monster will be in the room
 
-				if (randomEnemy == 0)
+				if (randomEnemy == 0) //goblin enemy
 				{
 					MonsterRoom monsterRoom(x, true, Goblin, Monster);
 					Map[x] = monsterRoom;
 					numberOfEnemies--;
 				}
-				if (randomEnemy == 1)
+				if (randomEnemy == 1) //oger enemy
 				{
 					MonsterRoom monsterRoom(x, true, Oger, Monster);
 					Map[x] = monsterRoom;
 					numberOfEnemies--;
 				}
-				if (randomEnemy == 2)
+				if (randomEnemy == 2) //cyclops enemy
 				{
 					MonsterRoom monsterRoom(x, true, Cyclops, Monster);
 					Map[x] = monsterRoom;
@@ -71,15 +71,16 @@ void RoomGenerator::generateMap()
 		}
 		else
 		{
-			TreasureRoom treasureRoom(x, Treasure);
+			TreasureRoom treasureRoom(x, Treasure); //final room is always treasure
 			Map[x] = treasureRoom;
 		}
 	}
-	setGameDifficulty(numberOfRooms);
+	setGameDifficulty(numberOfRooms); //sets the game difficulty in txt
 }
 
 void RoomGenerator::setGameDifficulty(int numberOfrooms)
 {
+	//sets the difficulty for the results screen
 	if (numberOfrooms == 6)
 	{
 		difficulty = "Easy";
@@ -93,7 +94,7 @@ void RoomGenerator::setGameDifficulty(int numberOfrooms)
 		difficulty = "Hard";
 	}
 }
-
+/*Getters & Setters for difficulty*/
 std::string RoomGenerator::getGamedifficulty()
 {
 	return difficulty;
@@ -103,7 +104,7 @@ std::string RoomGenerator::getDescription()
 {
 	return description;
 }
-
+/*Getters & Setters for room info*/
 int RoomGenerator::getRoomNumber()
 {
 	return roomNumber;
@@ -122,7 +123,7 @@ EnemyType RoomGenerator::getEnemyType(int roomNumber)
 void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 {
 	char yesOrNo = 'a';
-	if (!bAlreadyVisited[currentRoomNumber])
+	if (!bAlreadyVisited[currentRoomNumber]) //if the room hasn't been visited spawn item
 	{
 
 		if (Map[currentRoomNumber].bHasHealthPotion)
@@ -187,6 +188,7 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 
 void RoomGenerator::checkIfRoomLocked(int currentRoomNumber)
 {
+	//checks if the player has a key to unlock the door
 	std::cout << "You approach a set of doors they are locked. \n";
 	if (!playerMonk.getKey())
 	{
@@ -201,17 +203,17 @@ void RoomGenerator::checkIfRoomLocked(int currentRoomNumber)
 
 void RoomGenerator::spawnPlayer()
 {
+	//sets the players name and descriptiion
 	std::string playerName = "";
-	std::string playerDescription = "";
+	std::string playerDescription;
 	std::cout << "Please enter a name for you character: ";
 	std::cin >> playerName;
+	cin.ignore();
 	std::cout << "Please enter a description about your charcater: ";
-	std::cin >> playerDescription;
+	std::getline(std::cin, playerDescription);
 	playerMonk.setName(playerName);
 	playerMonk.setDesc(playerDescription);
 	system("CLS");
-	fileReadWrite.writeToFile("Test");
-	fileReadWrite.writeToFile("Test2");
 	std::cout << "Your name is " << playerMonk.getName() << ".\n";
 	std::cout << "A bit about you " << playerMonk.getDesc() << ".\n";
 	std::cout << "You awaken in an empty room you have no idea how you got here but you know you must adventure to survive. \n";
@@ -222,7 +224,10 @@ void RoomGenerator::spawnPlayer()
 	bool bvalidInput = false;
 	playerMonk.setPlayerLocation(0);
 	int currentPlayerLocation = 0;
-	fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+	//PC filepath
+	//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+	//Laptop filepath
+	fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
 	std::cout << Map[0].getDescription() << "\n";	
 	playerMonk.DisplayPlayerStats();
 	playerMonk.setNumberOfRoomsVisited();
@@ -231,6 +236,7 @@ void RoomGenerator::spawnPlayer()
 
 void RoomGenerator::playerAction(int currentRoomNumber)
 {
+	//used to allow the player to select their action
 	bool bvalidInput = false;
 	int playerActionChoice = 0;
 	bool playerAlreadyHealed = false;
@@ -298,9 +304,12 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 	int currentRoomNumber = locationToMoveTo;
 
 	system("CLS");
-	if (Map[currentRoomNumber].getRoomType() == Treasure)
+	if (Map[currentRoomNumber].getRoomType() == Treasure) //if the next room is treasure room
 	{
-		fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Treasure.txt");
+		//PC filepath
+		//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Treasure.txt");
+		//Laptop filepath
+		fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Treasure.txt");
 		system("Color 0E");
 		checkIfRoomLocked(currentRoomNumber);
 		playerMonk.setNumberOfRoomsVisited();
@@ -310,33 +319,39 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 	else
 	{
 		playerMonk.setPlayerLocation(currentRoomNumber);
-		if (Map[currentRoomNumber].getRoomType() == Empty)
+		if (Map[currentRoomNumber].getRoomType() == Empty) //if the next room is an empty room
 		{
 			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0B");
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			//PC filepath
+	        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+	        //Laptop filepath
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
+			std::cout << Map[currentRoomNumber].getDescription() << "\n";
+			playerMonk.DisplayPlayerStats();
+			std::cout << "\n";
+			checkItemPickUP(currentRoomNumber); //checks if their is an item to pick up
+			playerAction(currentRoomNumber);
+		}
+		else if (Map[currentRoomNumber].getRoomType() == Key) //if the next room is a key room
+		{
+			playerMonk.setNumberOfRoomsVisited();
+			system("Color 0B");
+			//PC filepath
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			//Laptop filepath
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
 			std::cout << Map[currentRoomNumber].getDescription() << "\n";
 			playerMonk.DisplayPlayerStats();
 			std::cout << "\n";
 			checkItemPickUP(currentRoomNumber);
 			playerAction(currentRoomNumber);
 		}
-		else if (Map[currentRoomNumber].getRoomType() == Key)
-		{
-			playerMonk.setNumberOfRoomsVisited();
-			system("Color 0B");
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
-			std::cout << Map[currentRoomNumber].getDescription() << "\n";
-			playerMonk.DisplayPlayerStats();
-			std::cout << "\n";
-			checkItemPickUP(currentRoomNumber);
-			playerAction(currentRoomNumber);
-		}
-		else if (Map[currentRoomNumber].getRoomType() == Monster)
+		else if (Map[currentRoomNumber].getRoomType() == Monster) //if the next room is a monster room
 		{
 			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0C");
-			beginCombat(Map[currentRoomNumber].getEnemyType(currentRoomNumber));
+			beginCombat(Map[currentRoomNumber].getEnemyType(currentRoomNumber)); //start combat
 			movePlayerDirection(currentRoomNumber);
 			system("CLS");
 		}
@@ -348,13 +363,11 @@ void RoomGenerator::movePlayerDirection(int currentRoomNumber)
 	bool bvalidInput = false;
 	do
 	{
-		std::string movementDirection = userInput.getMovementDirection();
-		if (movementDirection == "North" && Map[currentRoomNumber].bCanMoveNorth)
+		std::string movementDirection = userInput.getMovementDirection(); //get player direction
+		if (movementDirection == "North" && Map[currentRoomNumber].bCanMoveNorth) //if the room allows player to move north move them
 		{
 			bAlreadyVisited[currentRoomNumber] = true;
 			roomEventGenerator(playerMonk.getPlayerLocation() + 1);
-			system("CLS");
-			bvalidInput = true;
 		}
 		if (movementDirection == "South" && Map[currentRoomNumber].bCanMoveSouth)
 		{
@@ -407,7 +420,10 @@ void RoomGenerator::combatLoop(Enemy enemy)
 		
 		if (playersTurn)
 		{
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			//PC filepath
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			//Laptop filepath
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Enemy.txt");
 			std::cout << "Players Turn \n";
 			int actionChoice = 0;
 			displayCombatStats(enemy);
@@ -468,7 +484,10 @@ void RoomGenerator::combatLoop(Enemy enemy)
 		else if (!playersTurn && !enemy.CheckDead())
 		{
 			system("CLS");
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			//PC filepath
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			//Laptop filepath
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Enemy.txt");
 			displayCombatStats(enemy);
 			std::cout << "Enemy Turn\n";
 			if (enemy.getCombatMove())

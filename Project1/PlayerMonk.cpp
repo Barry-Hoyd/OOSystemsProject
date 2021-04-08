@@ -89,7 +89,7 @@ void PlayerMonk::setNumberOfEnemiesDefeated()
 /*Player Inventory Functions*/
 void PlayerMonk::DisplayInventory()
 {
-	if (numberOfItemsInInventory > 0)
+	if (numberOfItemsInInventory > 0) //only displays if there are items
 	{
 		for (int i = 0; i < inventorySize; i++)
 		{
@@ -107,13 +107,13 @@ void PlayerMonk::DisplayInventory()
 
 void PlayerMonk::AddItemToInventory(std::string ItemToAdd)
 {
-	if (numberOfItemsInInventory < 4)
+	if (numberOfItemsInInventory < 4) //makes sure there is room
 	{
 		for (int i = 0; i < inventorySize; i++)
 		{
-			if (inventory[i] == "")
+			if (inventory[i] == "") //finds the first avalible empty slot
 			{
-				inventory[i].assign(ItemToAdd);
+				inventory[i].assign(ItemToAdd); //adds item in that slot then sets the bool
 				numberOfItemsInInventory++;
 				if (ItemToAdd == "Health Potion")
 				{
@@ -147,13 +147,13 @@ void PlayerMonk::AddItemToInventory(std::string ItemToAdd)
 
 void PlayerMonk::RemoveItemFromInventory(std::string ItemToRemove)
 {
-	if (numberOfItemsInInventory > 0)
+	if (numberOfItemsInInventory > 0) //checks there is an item to remove
 	{
 		for (int i = 0; i < inventorySize; i++)
 		{
-			if (inventory[i] == ItemToRemove)
+			if (inventory[i] == ItemToRemove) //if the item has the name of the item to remove
 			{
-				inventory[i].assign("");
+				inventory[i].assign(""); //makes the inventory slot empty and sets bools
 				numberOfItemsInInventory--;
 				if (ItemToRemove == "Health Potion")
 				{
@@ -174,25 +174,6 @@ void PlayerMonk::RemoveItemFromInventory(std::string ItemToRemove)
 				break;
 			}
 		}
-	}
-	else
-	{
-		std::cout << "Your Inventory Is Empty" << "\n";
-	}
-}
-
-bool PlayerMonk::CheckInventoryForItem(std::string itemToCheckFor)
-{
-	if (numberOfItemsInInventory > 0)
-	{	
-			if (inventory->find(itemToCheckFor))
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}	
 	}
 	else
 	{
