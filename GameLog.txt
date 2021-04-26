@@ -3,7 +3,6 @@ Player Moves North
   Visited Empty Room
     Player picks up a bomb
     Player chooses to display their inventory
-    Player prays and heals to full
 Player Moves North
   Visited Monster Room
     Combat begins!
@@ -13,8 +12,6 @@ Player Moves North
 Player Moves North
   Visited Key Room
     Player picks up a key
-    Player chooses to display their inventory
-    Player prays and heals to full
 Player Moves North
   Visited Monster Room
     Combat begins!
@@ -27,7 +24,7 @@ Player Moves North
  Game Stats 
 
 Monk Name: Harry
-Monk's Description: Gamer word sayer
+Monk's Description: This is a test
 Monk's Health: 15
 Monk's Damage: 200
 Monk's Armour: 0

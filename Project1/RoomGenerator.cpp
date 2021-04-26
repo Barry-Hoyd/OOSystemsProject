@@ -511,6 +511,7 @@ void RoomGenerator::combatLoop(Enemy enemy)
 				{
 					validAction = false;
 				}
+				system("PAUSE");
 				break;
 			}
 			if (validAction)
