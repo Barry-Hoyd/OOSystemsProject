@@ -2,33 +2,24 @@ Visited spawn
 Player Moves North
   Visited Empty Room
     Player picks up a bomb
-    Player chooses to display their inventory
 Player Moves North
   Visited Monster Room
     Combat begins!
-      Player uses an item
-        Bomb
-      Enemy defeated
-Player Moves North
-  Visited Key Room
-    Player picks up a key
-Player Moves North
-  Visited Monster Room
-    Combat begins!
-      Player attacks
-        Player attack hits
-      Enemy defeated
-Player Moves North
-  Visited Treasure Room
+      Player defends
+      Enemy defends
+      Player defends
+      Enemy attacks
+        Enemy attack hits
+      Player Dead
 
  Game Stats 
 
-Monk Name: Harry
-Monk's Description: This is a test
-Monk's Health: 15
-Monk's Damage: 200
+Monk Name: d
+Monk's Description: d
+Monk's Health: -2
+Monk's Damage: 3
 Monk's Armour: 0
-Rooms Visited: 6
-Enemeies Defeated: 2
-Game Result: Won
+Rooms Visited: 3
+Enemeies Defeated: 0
+Game Result : Lost
 Thanks for playing!

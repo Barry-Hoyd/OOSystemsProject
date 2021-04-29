@@ -5,9 +5,9 @@ void FileReadWrite::clearGameLog()
 	//clears game log at start of the game
 	ofstream gameLogFile;
 	//PC filepath
-	//gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ofstream::out | ofstream::trunc);
+	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ofstream::out | ofstream::trunc);
 	//Laptop filepath
-	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\GameLog.txt", ofstream::out | ofstream::trunc);
+	//gameLogFile.open("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\GameLog.txt", ofstream::out | ofstream::trunc);
 	gameLogFile.close();
 }
 
@@ -34,9 +34,9 @@ void FileReadWrite::writeToFile(string message)
 	//write stats to game log
 	ofstream gameLogFile;
 	//PC filepath
-	//gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ios::app);
+	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\Project1\\GameLog.txt", ios::app);
 	//Laptop filepath
-	gameLogFile.open("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\GameLog.txt", ios::app);
+	//gameLogFile.open("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\GameLog.txt", ios::app);
 	if (gameLogFile.is_open())
 	{
 		gameLogFile << message << endl;

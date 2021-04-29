@@ -85,7 +85,7 @@ void RoomGenerator::setGameDifficulty(int numberOfrooms)
 	{
 		difficulty = "Easy";
 	}
-	else if (numberOfrooms == 8)
+	else if (numberOfrooms == 9)
 	{
 		difficulty = "Medium";
 	}
@@ -176,17 +176,18 @@ void RoomGenerator::checkItemPickUP(int currentRoomNumber)
 				fileReadWrite.writeToFile("    Player picks up armour");
 			}
 		}
-		else if (Map[currentRoomNumber].bHasKey)
+
+	}
+	if (Map[currentRoomNumber].bHasKey && !playerMonk.getKey())
+	{
+		std::cout << "You have found a Key. \n \n";
+		yesOrNo = userInput.getYesNo();
+		if (yesOrNo)
 		{
-			std::cout << "You have found a Key. \n \n";
-			yesOrNo = userInput.getYesNo();
-			if (yesOrNo)
-			{
-				playerMonk.AddItemToInventory("Key");
-				bHasKey = false;
-				std::cout << "You have added a key to your inventory. \n \n";
-				fileReadWrite.writeToFile("    Player picks up a key");
-			}
+			playerMonk.AddItemToInventory("Key");
+			bHasKey = false;
+			std::cout << "You have added a key to your inventory. \n \n";
+			fileReadWrite.writeToFile("    Player picks up a key");
 		}
 	}
 }
@@ -199,10 +200,10 @@ void RoomGenerator::checkIfRoomLocked(int currentRoomNumber)
 	{
 		std::cout << "You need a key to open them, maybe its in the dungeon somewhere. \n";
 	}
-	else 
+	else
 	{
 		std::cout << "You use the key you have found to unlock the doors. \n";
-		std::cout <<  Map[currentRoomNumber].getDescription() << "\n";
+		std::cout << Map[currentRoomNumber].getDescription() << "\n";
 	}
 }
 
@@ -230,10 +231,10 @@ void RoomGenerator::spawnPlayer()
 	playerMonk.setPlayerLocation(0);
 	int currentPlayerLocation = 0;
 	//PC filepath
-	//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+	fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
 	//Laptop filepath
-	fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
-	std::cout << Map[0].getDescription() << "\n";	
+	//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
+	std::cout << Map[0].getDescription() << "\n";
 	playerMonk.DisplayPlayerStats();
 	playerMonk.setNumberOfRoomsVisited();
 	fileReadWrite.writeToFile("Visited spawn");
@@ -321,9 +322,9 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 	{
 		fileReadWrite.writeToFile("  Visited Treasure Room");
 		//PC filepath
-		//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Treasure.txt");
+		fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Treasure.txt");
 		//Laptop filepath
-		fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Treasure.txt");
+		//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Treasure.txt");
 		system("Color 0E");
 		checkIfRoomLocked(currentRoomNumber);
 		playerMonk.setNumberOfRoomsVisited();
@@ -339,9 +340,9 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0B");
 			//PC filepath
-	        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
-	        //Laptop filepath
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			//Laptop filepath
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
 			std::cout << Map[currentRoomNumber].getDescription() << "\n";
 			playerMonk.DisplayPlayerStats();
 			std::cout << "\n";
@@ -354,9 +355,9 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0B");
 			//PC filepath
-			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
 			//Laptop filepath
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
 			std::cout << Map[currentRoomNumber].getDescription() << "\n";
 			playerMonk.DisplayPlayerStats();
 			std::cout << "\n";
@@ -378,9 +379,9 @@ void RoomGenerator::roomEventGenerator(int locationToMoveTo)
 			playerMonk.setNumberOfRoomsVisited();
 			system("Color 0B");
 			//PC filepath
-			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\EmptyRoom.txt");
 			//Laptop filepath
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\EmptyRoom.txt");
 			std::cout << Map[currentRoomNumber].getDescription() << "\n";
 			playerMonk.DisplayPlayerStats();
 			std::cout << "\n";
@@ -414,7 +415,7 @@ void RoomGenerator::movePlayerDirection(int currentRoomNumber)
 			{
 				roomEventGenerator(playerMonk.getPlayerLocation() - 1);
 			}
-			
+
 			bvalidInput = true;
 		}
 		else
@@ -423,7 +424,7 @@ void RoomGenerator::movePlayerDirection(int currentRoomNumber)
 		}
 	} while (!bvalidInput);
 }
-	
+
 void RoomGenerator::beginCombat(EnemyType enemyType)
 {
 	fileReadWrite.writeToFile("    Combat begins!");
@@ -451,13 +452,13 @@ void RoomGenerator::combatLoop(Enemy enemy)
 	playerMonk.setIsInCombat(true);
 	while (!playerMonk.getDead() && !enemy.bIsDead)
 	{
-		
+
 		if (playersTurn)
 		{
 			//PC filepath
-			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
 			//Laptop filepath
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Enemy.txt");
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Enemy.txt");
 			std::cout << "Players Turn \n";
 			int actionChoice = 0;
 			displayCombatStats(enemy);
@@ -531,9 +532,9 @@ void RoomGenerator::combatLoop(Enemy enemy)
 		{
 			system("CLS");
 			//PC filepath
-			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
+			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Enemy.txt");
 			//Laptop filepath
-			fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Enemy.txt");
+			//fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Enemy.txt");
 			displayCombatStats(enemy);
 			std::cout << "Enemy Turn\n";
 			if (enemy.getCombatMove())
@@ -541,9 +542,9 @@ void RoomGenerator::combatLoop(Enemy enemy)
 				fileReadWrite.writeToFile("      Enemy attacks");
 				if (enemy.Attack(enemy.attackHitChance))
 				{
-					playerMonk.setCurrentHealth(playerMonk.getCurrentHealth() - (enemy.damage - playerMonk.getArmour() ));
+					playerMonk.setCurrentHealth(playerMonk.getCurrentHealth() - (enemy.damage - playerMonk.getArmour()));
 					fileReadWrite.writeToFile("        Enemy attack hits");
-					//playerMonk.setDead(true);
+					playerMonk.setDead(true);
 				}
 				else
 				{
@@ -555,17 +556,18 @@ void RoomGenerator::combatLoop(Enemy enemy)
 				fileReadWrite.writeToFile("      Enemy defends");
 				enemy.Defend();
 			}
+			if (playerMonk.getDead())
+			{
+				std::cout << "You have died! \n";
+				fileReadWrite.writeToFile("      Player Dead");
+				system("PAUSE");
+				system("CLS");
+				displayWinStats(false);
+				//playersTurn = false;
+			}
+			system("PAUSE");
+			system("CLS");
 			playersTurn = true;
-			system("PAUSE");
-			system("CLS");
-		}
-		if (playerMonk.getDead())
-		{
-			std::cout << "You have died! \n";
-			fileReadWrite.writeToFile("      Player Dead");
-			system("PAUSE");
-			system("CLS");
-			displayWinStats(false);
 		}
 	}
 }

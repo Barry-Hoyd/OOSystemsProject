@@ -17,7 +17,7 @@ private:
 	int numberOfEnemiesDefeated = 0;
 	/*Player Combat Stats*/
 	int armour = 0;
-	int damage = 200;
+	int damage = 3;
 	bool isAttacking = false;
 	bool isDefending = false;
 	bool bIsInCombat = false;

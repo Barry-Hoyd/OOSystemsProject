@@ -12,9 +12,9 @@ void Menu()
     system("CLS");
     int menuFunction = 0;
     //PC filepath
-    //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
+    fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Menu.txt");
     //Laptop filepath
-    fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Menu.txt");
+    //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Menu.txt");
     cout << "Option: ";
     menuFunction = userInput.getPlayerAction();
     system("CLS");
@@ -25,9 +25,9 @@ void Menu()
         break;
     case(2):
         //PC filepath
-        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
+        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Difficutly.txt");
         //Laptop filepath
-        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Difficutly.txt");
+        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Difficutly.txt");
         cout << "Option: ";
         menuFunction = userInput.getPlayerAction();
         //sets the difficulty of the game
@@ -50,10 +50,10 @@ void Menu()
         break;
     case(3):
         //PC filepath
-        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
+        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\Project1\\Rules.txt");
         //Laptop filepath
         //displays the rules
-        fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Rules.txt");
+        //fileReadWrite.displayFile("C:\\Users\\boydh\\source\\repos\\OOSystemsProject\\Rules.txt");
         system("PAUSE");
         Menu();
         break;
